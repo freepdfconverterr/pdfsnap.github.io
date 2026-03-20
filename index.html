@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ADSENSE CODE -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7352879981287034" crossorigin="anonymous"></script>
+  <!-- SEO -->
+  <meta name="keywords" content="free pdf converter, pdf to word, pdf to jpg, image compress, resize image, freepdfconverterr, online pdf tools, image tools online free"/>
+  <meta name="author" content="Freepdfconverterr"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Freepdfconverterr — Free PDF & Image Tools Online</title>
+  <meta name="description" content="Freepdfconverterr - Free online PDF and Image tools. Convert PDF to Word, compress images, resize, crop and more. No signup required."/>
+  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <!-- PDF-LIB for real PDF processing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <!-- PDF.js for PDF rendering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0f; --surface: #13131a; --card: #1a1a24; --border: #2a2a3a;
+      --accent: #ff4d00; --accent2: #ff8c42; --text: #f0f0f5; --muted: #8888aa;
+      --success: #00e5a0; --blue: #4d8fff;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+
+    /* ADBLOCKER */
+    .adblock-overlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.97); align-items: center; justify-content: center; padding: 1rem; }
+    .adblock-overlay.show { display: flex; }
+    .adblock-box { background: var(--card); border: 2px solid var(--accent); border-radius: 20px; padding: 2rem; max-width: 440px; width: 100%; text-align: center; }
+    .adblock-icon { font-size: 3rem; margin-bottom: 0.8rem; }
+    .adblock-title { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.6rem; }
+    .adblock-title span { color: var(--accent); }
+    .adblock-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.2rem; }
+    .adblock-steps { text-align: left; background: var(--surface); border-radius: 12px; padding: 1rem; margin-bottom: 1.2rem; }
+    .adblock-step { display: flex; gap: 0.7rem; margin-bottom: 0.7rem; font-size: 0.87rem; align-items: flex-start; }
+    .adblock-step:last-child { margin-bottom: 0; }
+    .snum { background: var(--accent); color: white; min-width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; margin-top: 1px; }
+    .btn-adblock { display: block; width: 100%; background: var(--accent); color: white; border: none; border-radius: 12px; padding: 0.9rem; font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-bottom: 0.6rem; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(10,10,15,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .logo { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    .nav-badge { font-size: 0.67rem; background: var(--accent); color: white; padding: 3px 9px; border-radius: 99px; font-weight: 700; }
+
+    /* HERO */
+    .hero { text-align: center; padding: 5rem 2rem 3rem; position: relative; overflow: hidden; }
+    .hero-glow { position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 600px; height: 350px; background: radial-gradient(ellipse, rgba(255,77,0,0.14) 0%, transparent 70%); pointer-events: none; }
+    .hero-tag { display: inline-block; border: 1px solid var(--accent); color: var(--accent); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 13px; border-radius: 99px; margin-bottom: 1.1rem; }
+    h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; }
+    h1 em { color: var(--accent); font-style: normal; }
+    .hero-sub { margin: 0.9rem auto 0; color: var(--muted); font-size: 0.97rem; max-width: 460px; }
+    .hero-stats { display: flex; justify-content: center; gap: 2.5rem; margin-top: 2rem; flex-wrap: wrap; }
+    .stat-num { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; }
+    .stat-label { color: var(--muted); font-size: 0.76rem; margin-top: 1px; }
+
+    /* AD */
+    .ad-banner { max-width: 728px; margin: 0 auto 1.5rem; background: var(--surface); border: 1px dashed var(--border); border-radius: 10px; height: 90px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.76rem; }
+
+    /* TABS */
+    .tabs-wrap { display: flex; justify-content: center; gap: 0.5rem; padding: 0 1rem 1.8rem; flex-wrap: wrap; }
+    .tab-btn { background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 0.5rem 1.2rem; border-radius: 99px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .tab-btn.active, .tab-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+
+    /* TOOLS */
+    .section { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .section-title { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.25rem; }
+    .section-sub { color: var(--muted); font-size: 0.87rem; margin-bottom: 1.8rem; }
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 1rem; }
+    .tool-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.4rem; cursor: pointer; transition: all 0.22s; position: relative; overflow: hidden; }
+    .tool-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,77,0,0.1); }
+    .tool-card.hidden { display: none; }
+    .tool-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 0.9rem; }
+    .tool-name { font-family: 'Syne', sans-serif; font-size: 0.97rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .tool-desc { color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
+    .tool-badge { position: absolute; top: 0.9rem; right: 0.9rem; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; }
+    .badge-hot { background: rgba(255,77,0,0.2); color: var(--accent); }
+    .badge-free { background: rgba(0,229,160,0.15); color: var(--success); }
+    .badge-new { background: rgba(77,143,255,0.2); color: var(--blue); }
+
+    /* HOW IT WORKS */
+    .how-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 3.5rem 2rem; text-align: center; }
+    .how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; margin-top: 2rem; max-width: 800px; margin-left: auto; margin-right: auto; }
+    .how-num { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--accent); opacity: 0.3; line-height: 1; }
+    .how-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin: 0.3rem 0 0.2rem; }
+    .how-desc { color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
+
+    /* MODAL */
+    .overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 1rem; }
+    .overlay.active { display: flex; }
+    .modal { background: var(--card); border: 1px solid var(--border); border-radius: 18px; width: 100%; max-width: 520px; padding: 1.8rem; position: relative; max-height: 92vh; overflow-y: auto; }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; background: var(--surface); border: 1px solid var(--border); color: var(--muted); width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; }
+    .modal-close:hover { color: var(--text); border-color: var(--accent); }
+    .modal-title { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.25rem; }
+    .modal-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.4rem; }
+
+    /* DROP ZONE */
+    .dropzone { border: 2px dashed var(--border); border-radius: 12px; padding: 2rem 1.2rem; text-align: center; cursor: pointer; transition: all 0.22s; position: relative; }
+    .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: rgba(255,77,0,0.04); }
+    .dropzone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    .drop-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+    .drop-text { font-size: 0.9rem; color: var(--muted); }
+    .drop-text strong { color: var(--text); }
+    .drop-formats { font-size: 0.74rem; color: var(--muted); margin-top: 0.3rem; }
+
+    /* FILE LIST */
+    .file-list { margin-top: 0.9rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .file-item { display: flex; align-items: center; gap: 0.8rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.7rem 0.9rem; }
+    .file-item-icon { font-size: 1.3rem; }
+    .file-item-info { flex: 1; }
+    .file-item-name { font-size: 0.85rem; font-weight: 600; word-break: break-all; }
+    .file-item-size { font-size: 0.73rem; color: var(--muted); }
+    .file-item-remove { cursor: pointer; color: var(--muted); font-size: 0.95rem; padding: 0 4px; }
+    .file-item-remove:hover { color: var(--accent); }
+
+    /* EXTRA OPTIONS */
+    .extra-opts { margin-top: 1rem; background: var(--surface); border-radius: 10px; padding: 1rem; }
+    .extra-opts label { display: block; font-size: 0.83rem; color: var(--muted); margin-bottom: 0.35rem; font-weight: 600; }
+    .extra-opts input, .extra-opts select { width: 100%; background: var(--card); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 0.5rem 0.7rem; font-size: 0.85rem; margin-bottom: 0.7rem; }
+    .extra-opts input:last-child, .extra-opts select:last-child { margin-bottom: 0; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+
+    /* PROGRESS */
+    .progress-wrap { margin-top: 1rem; display: none; }
+    .progress-wrap.show { display: block; }
+    .progress-bar-bg { background: var(--surface); border-radius: 99px; height: 6px; overflow: hidden; margin-bottom: 0.4rem; }
+    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 99px; width: 0%; transition: width 0.3s ease; }
+    .progress-text { font-size: 0.79rem; color: var(--muted); text-align: center; }
+
+    /* RESULT */
+    .result-area { display: none; margin-top: 1rem; }
+    .result-area.show { display: block; }
+    .result-item { display: flex; align-items: center; gap: 0.8rem; background: rgba(0,229,160,0.08); border: 1px solid rgba(0,229,160,0.25); border-radius: 10px; padding: 0.9rem 1rem; margin-bottom: 0.5rem; }
+    .result-icon { font-size: 1.5rem; }
+    .result-info { flex: 1; }
+    .result-name { font-size: 0.85rem; font-weight: 600; color: var(--success); }
+    .result-size { font-size: 0.72rem; color: var(--muted); }
+    .btn-dl { background: var(--success); color: #0a0a0f; border: none; border-radius: 8px; padding: 0.5rem 1rem; font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; text-decoration: none; white-space: nowrap; }
+    .btn-dl:hover { opacity: 0.9; }
+
+    /* BUTTONS */
+    .btn-convert { display: block; width: 100%; margin-top: 1.1rem; background: var(--accent); color: white; border: none; border-radius: 11px; padding: 0.9rem; font-family: 'Syne', sans-serif; font-size: 0.97rem; font-weight: 700; cursor: pointer; transition: all 0.22s; }
+    .btn-convert:hover { background: var(--accent2); transform: translateY(-1px); }
+    .btn-convert:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .btn-add-more { display: block; width: 100%; margin-top: 0.5rem; background: transparent; color: var(--accent); border: 1px dashed var(--accent); border-radius: 10px; padding: 0.6rem; font-size: 0.85rem; font-weight: 600; cursor: pointer; position: relative; }
+    .btn-add-more input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+
+    /* FOOTER */
+    footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.81rem; border-top: 1px solid var(--border); }
+    footer strong { color: var(--text); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 600px) {
+      nav { padding: 0.9rem 1.1rem; }
+      .hero { padding: 3.5rem 1.2rem 2.5rem; }
+      .section { padding: 0 1.1rem 3rem; }
+      .modal { padding: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ADBLOCKER -->
+<div class="adblock-overlay" id="adblockOverlay">
+  <div class="adblock-box">
+    <div class="adblock-icon">🛡️</div>
+    <div class="adblock-title">Disable <span>Ad Blocker</span></div>
+    <div class="adblock-desc">Our tools are 100% free. Small ads keep this site running. Please whitelist us!</div>
+    <div class="adblock-steps">
+      <div class="adblock-step"><div class="snum">1</div><div>Click Ad Blocker icon in browser toolbar</div></div>
+      <div class="adblock-step"><div class="snum">2</div><div>Tap <strong>"Disable on this site"</strong></div></div>
+      <div class="adblock-step"><div class="snum">3</div><div><strong>Refresh page</strong> and use all free tools!</div></div>
+    </div>
+    <button class="btn-adblock" onclick="dismissAdblock()">✅ Done — Continue to Site</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">Free<span>PDFConverterr</span></a>
+  <span class="nav-badge">100% Free</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-tag">⚡ Works in browser · No upload to server · Instant</div>
+  <h1>Free PDF & Image<br/><em>Tools Online</em></h1>
+  <p class="hero-sub">Real working tools — all processing happens on your device. No server, no account, no watermark.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">16+</div><div class="stat-label">Working Tools</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Browser Based</div></div>
+    <div class="stat"><div class="stat-num">0</div><div class="stat-label">Server Upload</div></div>
+  </div>
+</section>
+
+<div class="ad-banner">📢 Advertisement — Google AdSense</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <button class="tab-btn active" onclick="filterTools('all',this)">🔥 All Tools</button>
+  <button class="tab-btn" onclick="filterTools('pdf',this)">📄 PDF Tools</button>
+  <button class="tab-btn" onclick="filterTools('image',this)">🖼️ Image Tools</button>
+</div>
+
+<!-- TOOLS GRID -->
+<section class="section">
+  <div class="section-title" id="gridTitle">All Tools</div>
+  <p class="section-sub">Tap any tool — files never leave your device!</p>
+  <div class="tools-grid">
+    <div class="tool-card" data-cat="pdf" onclick="openTool('merge')">
+      <span class="tool-badge badge-hot">🔥 Popular</span>
+      <div class="tool-icon" style="background:rgba(100,100,255,0.12)">🗂️</div>
+      <div class="tool-name">Merge PDF</div>
+      <div class="tool-desc">Combine multiple PDF files into one single document. Select as many files as you want!</div>
+    </div>
+    <div class="tool-card" data-cat="pdf" onclick="openTool('split')">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(255,200,0,0.1)">✂️</div>
+      <div class="tool-name">Split PDF</div>
+      <div class="tool-desc">Split a PDF into separate pages or extract a page range.</div>
+    </div>
+    <div class="tool-card" data-cat="pdf" onclick="openTool('rotate')">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(180,100,255,0.1)">🔃</div>
+      <div class="tool-name">Rotate PDF</div>
+      <div class="tool-desc">Rotate all PDF pages by 90°, 180°, or 270°.</div>
+    </div>
+    <div class="tool-card" data-cat="pdf" onclick="openTool('pdf2jpg')">
+      <span class="tool-badge badge-hot">🔥 Popular</span>
+      <div class="tool-icon" style="background:rgba(255,140,66,0.12)">🖼️</div>
+      <div class="tool-name">PDF to JPG</div>
+      <div class="tool-desc">Convert every PDF page into a JPG image and download them.</div>
+    </div>
+    <div class="tool-card" data-cat="pdf" onclick="openTool('jpg2pdf')">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(0,229,160,0.1)">🔄</div>
+      <div class="tool-name">JPG / PNG to PDF</div>
+      <div class="tool-desc">Convert one or multiple images into a single PDF file.</div>
+    </div>
+    <div class="tool-card" data-cat="pdf" onclick="openTool('watermarkpdf')">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(255,77,0,0.12)">💧</div>
+      <div class="tool-name">Watermark PDF</div>
+      <div class="tool-desc">Add custom text watermark to every page of your PDF.</div>
+    </div>
+    <div class="tool-card" data-cat="image" onclick="openTool('imgcompress')">
+      <span class="tool-badge badge-hot">🔥 Popular</span>
+      <div class="tool-icon" style="background:rgba(0,229,160,0.12)">🗜️</div>
+      <div class="tool-name">Compress Image</div>
+      <div class="tool-desc">Reduce image file size. Choose quality level from 1–100%.</div>
+    </div>
+    <div class="tool-card" data-cat="image" onclick="openTool('imgresize')">
+      <span class="tool-badge badge-new">✨ New</span>
+      <div class="tool-icon" style="background:rgba(77,143,255,0.12)">📐</div>
+      <div class="tool-name">Resize Image</div>
+      <div class="tool-desc">Resize any image to exact pixel dimensions or percentage.</div>
+    </div>
+    <div class="tool-card" data-cat="image" onclick="openTool('cropimg')">
+      <span class="tool-badge badge-new">✨ New</span>
+      <div class="tool-icon" style="background:rgba(168,85,247,0.12)">✂️</div>
+      <div class="tool-name">Crop Image</div>
+      <div class="tool-desc">Crop images by entering exact pixel coordinates.</div>
+    </div>
+    <div class="tool-card" data-cat="image" onclick="openTool('jpg2png')">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(255,77,143,0.12)">🔁</div>
+      <div class="tool-name">JPG to PNG</div>
+      <div class="tool-desc">Convert JPG images to PNG format instantly in browser.</div>
+    </div>
+    <div class="tool-card" data-cat="image" onclick="openTool('png2jpg')">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(255,200,0,0.1)">🔀</div>
+      <div class="tool-name">PNG to JPG</div>
+      <div class="tool-desc">Convert PNG images to JPG to reduce file size.</div>
+    </div>
+    <div class="tool-card" data-cat="image" onclick="openTool('watermarkimg')">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(255,77,0,0.1)">💧</div>
+      <div class="tool-name">Watermark Image</div>
+      <div class="tool-desc">Add custom text watermark to protect your images.</div>
+    </div>
+    <div class="tool-card" data-cat="image" onclick="openTool('grayscale')">
+      <span class="tool-badge badge-new">✨ New</span>
+      <div class="tool-icon" style="background:rgba(150,150,150,0.12)">⬛</div>
+      <div class="tool-name">Image to Grayscale</div>
+      <div class="tool-desc">Convert color images to black and white instantly.</div>
+    </div>
+    <div class="tool-card" data-cat="image" onclick="openTool('flipimg')">
+      <span class="tool-badge badge-new">✨ New</span>
+      <div class="tool-icon" style="background:rgba(0,200,255,0.1)">🔄</div>
+      <div class="tool-name">Flip Image</div>
+      <div class="tool-desc">Flip images horizontally or vertically in one click.</div>
+    </div>
+    <div class="tool-card" data-cat="image" onclick="openTool('rotateimg')">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(255,140,0,0.1)">🔃</div>
+      <div class="tool-name">Rotate Image</div>
+      <div class="tool-desc">Rotate images 90°, 180°, or 270° for free.</div>
+    </div>
+    <div class="tool-card" data-cat="image" onclick="openTool('imgbright')">
+      <span class="tool-badge badge-new">✨ New</span>
+      <div class="tool-icon" style="background:rgba(255,230,0,0.1)">☀️</div>
+      <div class="tool-name">Brightness & Contrast</div>
+      <div class="tool-desc">Adjust brightness and contrast of your images easily.</div>
+    </div>
+  </div>
+</section>
+
+<div class="ad-banner">📢 Advertisement — Google AdSense</div>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div style="font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:0.3rem">How It Works</div>
+  <p style="color:var(--muted);font-size:0.87rem">Everything runs in YOUR browser — your files never leave your device</p>
+  <div class="how-steps">
+    <div><div class="how-num">01</div><div class="how-title">Pick a Tool</div><div class="how-desc">Choose any PDF or Image tool from the list.</div></div>
+    <div><div class="how-num">02</div><div class="how-title">Upload File</div><div class="how-desc">Select one or multiple files from your device.</div></div>
+    <div><div class="how-num">03</div><div class="how-title">Download</div><div class="how-desc">Processed instantly. Download your result file!</div></div>
+  </div>
+</section>
+
+<div class="ad-banner" style="margin:0;border-radius:0;max-width:100%;border-left:none;border-right:none;border-bottom:none;">📢 Advertisement</div>
+
+<footer>
+  <p>Made with ❤️ by <strong>Freepdfconverterr</strong> · Free PDF & Image Tools · No Signup · No Watermark · Files stay on your device</p>
+  <p style="margin-top:0.35rem;font-size:0.74rem">Privacy Policy · Terms of Use · Contact</p>
+</footer>
+
+<!-- =================== MODAL =================== -->
+<div class="overlay" id="overlay" onclick="closeOnOverlay(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modalTitle">Tool</div>
+    <p class="modal-sub" id="modalSub">Description</p>
+
+    <div class="dropzone" id="dropzone">
+      <input type="file" id="fileInput" onchange="handleFiles(event)" multiple/>
+      <div class="drop-icon">📂</div>
+      <div class="drop-text"><strong>Tap to select files</strong> or drag & drop</div>
+      <div class="drop-formats" id="dropFormats">Supported formats</div>
+    </div>
+
+    <div class="file-list" id="fileList"></div>
+
+    <button class="btn-add-more" id="btnAddMore" style="display:none">
+      ➕ Add More Files
+      <input type="file" id="fileInputMore" onchange="handleFiles(event)" multiple/>
+    </button>
+
+    <div class="extra-opts" id="extraOpts" style="display:none"></div>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar-bg"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="progress-text" id="progressText">Processing...</div>
+    </div>
+
+    <div class="result-area" id="resultArea"></div>
+
+    <button class="btn-convert" id="convertBtn" onclick="runTool()" disabled>Process Now →</button>
+  </div>
+</div>
+
+<script>
+// =================== ADBLOCK ===================
+function detectAdblock() {
+  const bait = document.createElement('div');
+  bait.className = 'adsbox pub_300x250 text-ad ad-slot';
+  bait.style.cssText = 'position:absolute;top:-9999px;left:-9999px;width:1px;height:1px;';
+  bait.innerHTML = '&nbsp;';
+  document.body.appendChild(bait);
+  setTimeout(() => {
+    if (!bait.offsetHeight || !bait.offsetParent) {
+      document.getElementById('adblockOverlay').classList.add('show');
+    }
+    document.body.removeChild(bait);
+  }, 200);
+}
+function dismissAdblock() {
+  document.getElementById('adblockOverlay').classList.remove('show');
+  setTimeout(detectAdblock, 2000);
+}
+window.addEventListener('load', () => setTimeout(detectAdblock, 1500));
+
+// =================== FILTER ===================
+function filterTools(cat, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tool-card').forEach(c => {
+    c.classList.toggle('hidden', cat !== 'all' && c.dataset.cat !== cat);
+  });
+  document.getElementById('gridTitle').textContent = cat === 'all' ? 'All Tools' : cat === 'pdf' ? 'PDF Tools' : 'Image Tools';
+}
+
+// =================== STATE ===================
+let currentTool = '';
+let selectedFiles = [];
+
+const toolConfig = {
+  merge:       { name:'Merge PDF',             sub:'Select 2 or more PDF files to merge into one.',            formats:'PDF files',         accept:'.pdf',            multi:true,  icon:'📄' },
+  split:       { name:'Split PDF',             sub:'Upload a PDF and choose page range to extract.',           formats:'PDF files',         accept:'.pdf',            multi:false, icon:'📄' },
+  rotate:      { name:'Rotate PDF',            sub:'Upload a PDF and select rotation angle.',                  formats:'PDF files',         accept:'.pdf',            multi:false, icon:'📄' },
+  pdf2jpg:     { name:'PDF to JPG',            sub:'Upload a PDF — each page converts to a JPG image.',        formats:'PDF files',         accept:'.pdf',            multi:false, icon:'📄' },
+  jpg2pdf:     { name:'Images to PDF',         sub:'Select one or more JPG/PNG images to combine into PDF.',   formats:'JPG, PNG images',   accept:'.jpg,.jpeg,.png', multi:true,  icon:'🖼️' },
+  watermarkpdf:{ name:'Watermark PDF',         sub:'Upload a PDF and enter watermark text.',                   formats:'PDF files',         accept:'.pdf',            multi:false, icon:'📄' },
+  imgcompress: { name:'Compress Image',        sub:'Upload an image and choose compression quality.',          formats:'JPG, PNG images',   accept:'.jpg,.jpeg,.png', multi:false, icon:'🖼️' },
+  imgresize:   { name:'Resize Image',          sub:'Upload an image and enter new dimensions.',                formats:'JPG, PNG images',   accept:'.jpg,.jpeg,.png', multi:false, icon:'🖼️' },
+  cropimg:     { name:'Crop Image',            sub:'Upload an image and enter crop coordinates.',              formats:'JPG, PNG images',   accept:'.jpg,.jpeg,.png', multi:false, icon:'🖼️' },
+  jpg2png:     { name:'JPG to PNG',            sub:'Upload JPG images — convert to PNG format.',               formats:'JPG images',        accept:'.jpg,.jpeg',      multi:true,  icon:'🖼️' },
+  png2jpg:     { name:'PNG to JPG',            sub:'Upload PNG images — convert to JPG format.',               formats:'PNG images',        accept:'.png',            multi:true,  icon:'🖼️' },
+  watermarkimg:{ name:'Watermark Image',       sub:'Upload an image and enter watermark text.',                formats:'JPG, PNG images',   accept:'.jpg,.jpeg,.png', multi:false, icon:'🖼️' },
+  grayscale:   { name:'Image to Grayscale',    sub:'Upload an image — convert to black and white.',           formats:'JPG, PNG images',   accept:'.jpg,.jpeg,.png', multi:true,  icon:'🖼️' },
+  flipimg:     { name:'Flip Image',            sub:'Upload an image and choose flip direction.',               formats:'JPG, PNG images',   accept:'.jpg,.jpeg,.png', multi:false, icon:'🖼️' },
+  rotateimg:   { name:'Rotate Image',          sub:'Upload an image and choose rotation angle.',              formats:'JPG, PNG images',   accept:'.jpg,.jpeg,.png', multi:false, icon:'🖼️' },
+  imgbright:   { name:'Brightness & Contrast', sub:'Upload an image and adjust brightness/contrast.',         formats:'JPG, PNG images',   accept:'.jpg,.jpeg,.png', multi:false, icon:'🖼️' },
+};
+
+// =================== EXTRA OPTIONS ===================
+const extraOptsHTML = {
+  split: `<label>From Page</label><input type="number" id="splitFrom" value="1" min="1"/>
+          <label>To Page</label><input type="number" id="splitTo" value="1" min="1"/>`,
+  rotate: `<label>Rotation Angle</label>
+           <select id="rotateAngle"><option value="90">90° Clockwise</option><option value="180">180°</option><option value="270">270° Clockwise</option></select>`,
+  watermarkpdf: `<label>Watermark Text</label><input type="text" id="wmText" placeholder="e.g. CONFIDENTIAL or freepdfconverterr.com"/>
+                 <label>Font Size</label><input type="number" id="wmSize" value="40" min="10" max="100"/>`,
+  imgcompress: `<label>Quality (1=smallest, 100=best)</label><input type="range" id="imgQuality" min="1" max="100" value="75" oninput="document.getElementById('qval').textContent=this.value"/>
+                <div style="text-align:center;color:var(--accent);font-weight:700;margin-top:4px" id="qval">75</div>`,
+  imgresize: `<div class="row-2"><div><label>Width (px)</label><input type="number" id="resizeW" placeholder="e.g. 800"/></div>
+              <div><label>Height (px)</label><input type="number" id="resizeH" placeholder="e.g. 600"/></div></div>
+              <label>Keep Aspect Ratio</label><select id="keepAspect"><option value="yes">Yes</option><option value="no">No</option></select>`,
+  cropimg: `<div class="row-2"><div><label>X (left px)</label><input type="number" id="cropX" value="0"/></div>
+            <div><label>Y (top px)</label><input type="number" id="cropY" value="0"/></div></div>
+            <div class="row-2"><div><label>Width (px)</label><input type="number" id="cropW" placeholder="e.g. 400"/></div>
+            <div><label>Height (px)</label><input type="number" id="cropH" placeholder="e.g. 300"/></div></div>`,
+  watermarkimg: `<label>Watermark Text</label><input type="text" id="imgWmText" placeholder="e.g. © Freepdfconverterr"/>
+                 <label>Text Color</label><select id="imgWmColor"><option value="rgba(255,255,255,0.6)">White</option><option value="rgba(0,0,0,0.5)">Black</option><option value="rgba(255,77,0,0.7)">Orange</option></select>`,
+  flipimg: `<label>Flip Direction</label>
+            <select id="flipDir"><option value="h">Horizontal (Left-Right)</option><option value="v">Vertical (Up-Down)</option></select>`,
+  rotateimg: `<label>Rotation Angle</label>
+              <select id="rotImgAngle"><option value="90">90° Clockwise</option><option value="180">180°</option><option value="270">270° Counter-clockwise</option></select>`,
+  imgbright: `<label>Brightness (-100 to 100)</label><input type="range" id="brightness" min="-100" max="100" value="0" oninput="document.getElementById('bval').textContent=this.value"/>
+              <div style="text-align:center;color:var(--accent);font-weight:700;margin-top:2px" id="bval">0</div>
+              <label style="margin-top:8px;display:block">Contrast (-100 to 100)</label><input type="range" id="contrast" min="-100" max="100" value="0" oninput="document.getElementById('cval').textContent=this.value"/>
+              <div style="text-align:center;color:var(--accent);font-weight:700;margin-top:2px" id="cval">0</div>`,
+};
+
+// =================== OPEN TOOL ===================
+function openTool(id) {
+  currentTool = id;
+  selectedFiles = [];
+  const t = toolConfig[id];
+  document.getElementById('modalTitle').textContent = t.name;
+  document.getElementById('modalSub').textContent = t.sub;
+  document.getElementById('dropFormats').textContent = 'Supported: ' + t.formats;
+  document.getElementById('fileInput').accept = t.accept;
+  document.getElementById('fileInput').multiple = t.multi;
+  document.getElementById('fileInputMore').accept = t.accept;
+  document.getElementById('fileInputMore').multiple = t.multi;
+  document.getElementById('fileList').innerHTML = '';
+  document.getElementById('progressWrap').classList.remove('show');
+  document.getElementById('resultArea').innerHTML = '';
+  document.getElementById('resultArea').classList.remove('show');
+  document.getElementById('convertBtn').disabled = true;
+  document.getElementById('convertBtn').textContent = 'Process Now →';
+  document.getElementById('convertBtn').onclick = runTool;
+  document.getElementById('btnAddMore').style.display = t.multi ? 'block' : 'none';
+  const eo = document.getElementById('extraOpts');
+  if (extraOptsHTML[id]) { eo.innerHTML = extraOptsHTML[id]; eo.style.display = 'block'; }
+  else { eo.style.display = 'none'; eo.innerHTML = ''; }
+  document.getElementById('overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('active');
+  document.body.style.overflow = '';
+  selectedFiles = [];
+}
+function closeOnOverlay(e) { if (e.target.id === 'overlay') closeModal(); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// drag drop
+const dz = document.getElementById('dropzone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('dragover'); addFiles(Array.from(e.dataTransfer.files)); });
+
+function handleFiles(e) { addFiles(Array.from(e.target.files)); e.target.value = ''; }
+
+function addFiles(files) {
+  const t = toolConfig[currentTool];
+  if (!t.multi) { selectedFiles = [files[0]]; }
+  else { selectedFiles.push(...files); }
+  renderFileList();
+  document.getElementById('convertBtn').disabled = selectedFiles.length === 0;
+}
+
+function removeFile(i) {
+  selectedFiles.splice(i, 1);
+  renderFileList();
+  document.getElementById('convertBtn').disabled = selectedFiles.length === 0;
+}
+
+function renderFileList() {
+  const fl = document.getElementById('fileList');
+  fl.innerHTML = '';
+  selectedFiles.forEach((f, i) => {
+    const div = document.createElement('div');
+    div.className = 'file-item';
+    div.innerHTML = `<span class="file-item-icon">${toolConfig[currentTool].icon}</span>
+      <div class="file-item-info"><div class="file-item-name">${f.name}</div><div class="file-item-size">${fmtSize(f.size)}</div></div>
+      <span class="file-item-remove" onclick="removeFile(${i})">✕</span>`;
+    fl.appendChild(div);
+  });
+}
+
+function fmtSize(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+  return (b/1048576).toFixed(2) + ' MB';
+}
+
+function setProgress(pct, txt) {
+  document.getElementById('progressWrap').classList.add('show');
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = txt;
+}
+
+function showResult(name, blob, mime) {
+  const url = URL.createObjectURL(blob);
+  const ra = document.getElementById('resultArea');
+  const div = document.createElement('div');
+  div.className = 'result-item';
+  div.innerHTML = `<span class="result-icon">✅</span>
+    <div class="result-info"><div class="result-name">${name}</div><div class="result-size">${fmtSize(blob.size)}</div></div>
+    <a class="btn-dl" href="${url}" download="${name}">⬇️ Download</a>`;
+  ra.appendChild(div);
+  ra.classList.add('show');
+  const btn = document.getElementById('convertBtn');
+  btn.textContent = 'Process Another →';
+  btn.disabled = false;
+  btn.onclick = () => { openTool(currentTool); };
+}
+
+// =================== RUN TOOL ===================
+async function runTool() {
+  document.getElementById('convertBtn').disabled = true;
+  document.getElementById('resultArea').innerHTML = '';
+  document.getElementById('resultArea').classList.remove('show');
+  setProgress(10, 'Starting...');
+  try {
+    switch(currentTool) {
+      case 'merge':       await toolMergePDF(); break;
+      case 'split':       await toolSplitPDF(); break;
+      case 'rotate':      await toolRotatePDF(); break;
+      case 'pdf2jpg':     await toolPDF2JPG(); break;
+      case 'jpg2pdf':     await toolImgToPDF(); break;
+      case 'watermarkpdf':await toolWatermarkPDF(); break;
+      case 'imgcompress': await toolCompressImg(); break;
+      case 'imgresize':   await toolResizeImg(); break;
+      case 'cropimg':     await toolCropImg(); break;
+      case 'jpg2png':     await toolConvertImg('png'); break;
+      case 'png2jpg':     await toolConvertImg('jpg'); break;
+      case 'watermarkimg':await toolWatermarkImg(); break;
+      case 'grayscale':   await toolGrayscale(); break;
+      case 'flipimg':     await toolFlipImg(); break;
+      case 'rotateimg':   await toolRotateImg(); break;
+      case 'imgbright':   await toolBrightnessContrast(); break;
+    }
+  } catch(err) {
+    setProgress(100, '❌ Error: ' + err.message);
+    document.getElementById('convertBtn').disabled = false;
+  }
+}
+
+// =================== PDF TOOLS ===================
+async function toolMergePDF() {
+  setProgress(20, 'Loading PDF library...');
+  const { PDFDocument } = PDFLib;
+  const merged = await PDFDocument.create();
+  for (let i = 0; i < selectedFiles.length; i++) {
+    setProgress(20 + Math.round((i/selectedFiles.length)*70), `Merging file ${i+1} of ${selectedFiles.length}...`);
+    const ab = await selectedFiles[i].arrayBuffer();
+    const doc = await PDFDocument.load(ab);
+    const pages = await merged.copyPages(doc, doc.getPageIndices());
+    pages.forEach(p => merged.addPage(p));
+  }
+  setProgress(95, 'Saving...');
+  const bytes = await merged.save();
+  showResult('merged.pdf', new Blob([bytes], {type:'application/pdf'}), 'application/pdf');
+  setProgress(100, 'Done! ✅');
+}
+
+async function toolSplitPDF() {
+  setProgress(20, 'Loading PDF...');
+  const { PDFDocument } = PDFLib;
+  const ab = await selectedFiles[0].arrayBuffer();
+  const srcDoc = await PDFDocument.load(ab);
+  const total = srcDoc.getPageCount();
+  const from = Math.max(1, parseInt(document.getElementById('splitFrom').value)||1) - 1;
+  const to = Math.min(total, parseInt(document.getElementById('splitTo').value)||total) - 1;
+  setProgress(50, 'Extracting pages...');
+  const newDoc = await PDFDocument.create();
+  const pages = await newDoc.copyPages(srcDoc, Array.from({length: to-from+1}, (_,i) => from+i));
+  pages.forEach(p => newDoc.addPage(p));
+  setProgress(90, 'Saving...');
+  const bytes = await newDoc.save();
+  showResult(`split_p${from+1}-${to+1}.pdf`, new Blob([bytes], {type:'application/pdf'}));
+  setProgress(100, 'Done! ✅');
+}
+
+async function toolRotatePDF() {
+  setProgress(20, 'Loading PDF...');
+  const { PDFDocument, degrees } = PDFLib;
+  const ab = await selectedFiles[0].arrayBuffer();
+  const doc = await PDFDocument.load(ab);
+  const angle = parseInt(document.getElementById('rotateAngle').value);
+  setProgress(50, 'Rotating pages...');
+  doc.getPages().forEach(p => p.setRotation(degrees((p.getRotation().angle + angle) % 360)));
+  setProgress(90, 'Saving...');
+  const bytes = await doc.save();
+  showResult('rotated.pdf', new Blob([bytes], {type:'application/pdf'}));
+  setProgress(100, 'Done! ✅');
+}
+
+async function toolPDF2JPG() {
+  setProgress(10, 'Loading PDF renderer...');
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const ab = await selectedFiles[0].arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({data: ab}).promise;
+  const total = pdf.numPages;
+  for (let i = 1; i <= total; i++) {
+    setProgress(Math.round((i/total)*90), `Converting page ${i} of ${total}...`);
+    const page = await pdf.getPage(i);
+    const vp = page.getViewport({scale: 2.0});
+    const canvas = document.createElement('canvas');
+    canvas.width = vp.width; canvas.height = vp.height;
+    await page.render({canvasContext: canvas.getContext('2d'), viewport: vp}).promise;
+    await new Promise(res => canvas.toBlob(blob => { showResult(`page_${i}.jpg`, blob, 'image/jpeg'); res(); }, 'image/jpeg', 0.92));
+  }
+  setProgress(100, 'Done! ✅');
+}
+
+async function toolImgToPDF() {
+  setProgress(20, 'Creating PDF...');
+  const { PDFDocument } = PDFLib;
+  const doc = await PDFDocument.create();
+  for (let i = 0; i < selectedFiles.length; i++) {
+    setProgress(20 + Math.round((i/selectedFiles.length)*70), `Adding image ${i+1}...`);
+    const ab = await selectedFiles[i].arrayBuffer();
+    const name = selectedFiles[i].name.toLowerCase();
+    let img;
+    if (name.endsWith('.png')) img = await doc.embedPng(ab);
+    else img = await doc.embedJpg(ab);
+    const page = doc.addPage([img.width, img.height]);
+    page.drawImage(img, {x:0, y:0, width:img.width, height:img.height});
+  }
+  setProgress(92, 'Saving...');
+  const bytes = await doc.save();
+  showResult('images_to_pdf.pdf', new Blob([bytes], {type:'application/pdf'}));
+  setProgress(100, 'Done! ✅');
+}
+
+async function toolWatermarkPDF() {
+  setProgress(20, 'Loading PDF...');
+  const { PDFDocument, StandardFonts, rgb, degrees } = PDFLib;
+  const ab = await selectedFiles[0].arrayBuffer();
+  const doc = await PDFDocument.load(ab);
+  const font = await doc.embedFont(StandardFonts.HelveticaBold);
+  const text = document.getElementById('wmText').value || 'WATERMARK';
+  const size = parseInt(document.getElementById('wmSize').value) || 40;
+  setProgress(50, 'Adding watermark...');
+  doc.getPages().forEach(page => {
+    const {width, height} = page.getSize();
+    page.drawText(text, {
+      x: width/2 - (text.length*size*0.3), y: height/2,
+      size, font, color: rgb(0.8,0.8,0.8), opacity: 0.4, rotate: degrees(45)
+    });
+  });
+  setProgress(90, 'Saving...');
+  const bytes = await doc.save();
+  showResult('watermarked.pdf', new Blob([bytes], {type:'application/pdf'}));
+  setProgress(100, 'Done! ✅');
+}
+
+// =================== IMAGE TOOLS ===================
+function loadImgCanvas(file) {
+  return new Promise((res) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const c = document.createElement('canvas');
+      c.width = img.width; c.height = img.height;
+      c.getContext('2d').drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+      res({canvas: c, img});
+    };
+    img.src = url;
+  });
+}
+
+async function toolCompressImg() {
+  setProgress(30, 'Loading image...');
+  const q = (parseInt(document.getElementById('imgQuality').value) || 75) / 100;
+  const {canvas} = await loadImgCanvas(selectedFiles[0]);
+  setProgress(70, 'Compressing...');
+  canvas.toBlob(blob => {
+    const ext = selectedFiles[0].name.endsWith('.png') ? 'png' : 'jpg';
+    showResult(`compressed.${ext}`, blob);
+    setProgress(100, 'Done! ✅');
+  }, selectedFiles[0].type || 'image/jpeg', q);
+}
+
+async function toolResizeImg() {
+  setProgress(30, 'Loading image...');
+  const {canvas, img} = await loadImgCanvas(selectedFiles[0]);
+  let w = parseInt(document.getElementById('resizeW').value) || img.width;
+  let h = parseInt(document.getElementById('resizeH').value) || img.height;
+  const keep = document.getElementById('keepAspect').value === 'yes';
+  if (keep) {
+    const ratio = img.width / img.height;
+    if (document.getElementById('resizeW').value && !document.getElementById('resizeH').value) h = Math.round(w / ratio);
+    else if (!document.getElementById('resizeW').value && document.getElementById('resizeH').value) w = Math.round(h * ratio);
+  }
+  setProgress(60, 'Resizing...');
+  const c2 = document.createElement('canvas');
+  c2.width = w; c2.height = h;
+  c2.getContext('2d').drawImage(canvas, 0, 0, w, h);
+  c2.toBlob(blob => { showResult(`resized_${w}x${h}.jpg`, blob); setProgress(100, 'Done! ✅'); }, 'image/jpeg', 0.92);
+}
+
+async function toolCropImg() {
+  setProgress(30, 'Loading image...');
+  const {canvas} = await loadImgCanvas(selectedFiles[0]);
+  const x = parseInt(document.getElementById('cropX').value)||0;
+  const y = parseInt(document.getElementById('cropY').value)||0;
+  const w = parseInt(document.getElementById('cropW').value)||canvas.width;
+  const h = parseInt(document.getElementById('cropH').value)||canvas.height;
+  setProgress(60, 'Cropping...');
+  const c2 = document.createElement('canvas');
+  c2.width = w; c2.height = h;
+  c2.getContext('2d').drawImage(canvas, x, y, w, h, 0, 0, w, h);
+  c2.toBlob(blob => { showResult('cropped.jpg', blob); setProgress(100, 'Done! ✅'); }, 'image/jpeg', 0.92);
+}
+
+async function toolConvertImg(toFmt) {
+  for (let i = 0; i < selectedFiles.length; i++) {
+    setProgress(Math.round((i/selectedFiles.length)*90), `Converting ${i+1} of ${selectedFiles.length}...`);
+    const {canvas} = await loadImgCanvas(selectedFiles[i]);
+    const mime = toFmt === 'png' ? 'image/png' : 'image/jpeg';
+    const base = selectedFiles[i].name.replace(/\.[^.]+$/, '');
+    await new Promise(res => canvas.toBlob(blob => { showResult(`${base}.${toFmt}`, blob); res(); }, mime, 0.92));
+  }
+  setProgress(100, 'Done! ✅');
+}
+
+async function toolWatermarkImg() {
+  setProgress(30, 'Loading image...');
+  const {canvas} = await loadImgCanvas(selectedFiles[0]);
+  const ctx = canvas.getContext('2d');
+  const text = document.getElementById('imgWmText').value || '© Freepdfconverterr';
+  const color = document.getElementById('imgWmColor').value;
+  const fs = Math.max(16, Math.round(canvas.width * 0.05));
+  ctx.font = `bold ${fs}px Arial`;
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.fillText(text, canvas.width/2, canvas.height - fs);
+  setProgress(80, 'Saving...');
+  canvas.toBlob(blob => { showResult('watermarked.jpg', blob); setProgress(100, 'Done! ✅'); }, 'image/jpeg', 0.92);
+}
+
+async function toolGrayscale() {
+  for (let i = 0; i < selectedFiles.length; i++) {
+    setProgress(Math.round((i/selectedFiles.length)*90), `Converting ${i+1} of ${selectedFiles.length}...`);
+    const {canvas} = await loadImgCanvas(selectedFiles[i]);
+    const ctx = canvas.getContext('2d');
+    const id = ctx.getImageData(0,0,canvas.width,canvas.height);
+    for (let j = 0; j < id.data.length; j+=4) {
+      const g = id.data[j]*0.299 + id.data[j+1]*0.587 + id.data[j+2]*0.114;
+      id.data[j] = id.data[j+1] = id.data[j+2] = g;
+    }
+    ctx.putImageData(id, 0, 0);
+    const base = selectedFiles[i].name.replace(/\.[^.]+$/, '');
+    await new Promise(res => canvas.toBlob(blob => { showResult(`${base}_gray.jpg`, blob); res(); }, 'image/jpeg', 0.92));
+  }
+  setProgress(100, 'Done! ✅');
+}
+
+async function toolFlipImg() {
+  setProgress(30, 'Loading image...');
+  const {canvas} = await loadImgCanvas(selectedFiles[0]);
+  const dir = document.getElementById('flipDir').value;
+  const c2 = document.createElement('canvas');
+  c2.width = canvas.width; c2.height = canvas.height;
+  const ctx = c2.getContext('2d');
+  if (dir === 'h') { ctx.translate(canvas.width, 0); ctx.scale(-1, 1); }
+  else { ctx.translate(0, canvas.height); ctx.scale(1, -1); }
+  ctx.drawImage(canvas, 0, 0);
+  c2.toBlob(blob => { showResult('flipped.jpg', blob); setProgress(100, 'Done! ✅'); }, 'image/jpeg', 0.92);
+}
+
+async function toolRotateImg() {
+  setProgress(30, 'Loading image...');
+  const {canvas, img} = await loadImgCanvas(selectedFiles[0]);
+  const angle = parseInt(document.getElementById('rotImgAngle').value);
+  const rad = angle * Math.PI / 180;
+  const c2 = document.createElement('canvas');
+  const swap = angle === 90 || angle === 270;
+  c2.width = swap ? img.height : img.width;
+  c2.height = swap ? img.width : img.height;
+  const ctx = c2.getContext('2d');
+  ctx.translate(c2.width/2, c2.height/2);
+  ctx.rotate(rad);
+  ctx.drawImage(canvas, -img.width/2, -img.height/2);
+  c2.toBlob(blob => { showResult('rotated.jpg', blob); setProgress(100, 'Done! ✅'); }, 'image/jpeg', 0.92);
+}
+
+async function toolBrightnessContrast() {
+  setProgress(30, 'Loading image...');
+  const {canvas} = await loadImgCanvas(selectedFiles[0]);
+  const ctx = canvas.getContext('2d');
+  const b = parseInt(document.getElementById('brightness').value)||0;
+  const c = parseInt(document.getElementById('contrast').value)||0;
+  const id = ctx.getImageData(0,0,canvas.width,canvas.height);
+  const factor = (259*(c+255))/(255*(259-c));
+  for (let i = 0; i < id.data.length; i+=4) {
+    id.data[i]   = Math.min(255, Math.max(0, factor*(id.data[i]-128)+128+b));
+    id.data[i+1] = Math.min(255, Math.max(0, factor*(id.data[i+1]-128)+128+b));
+    id.data[i+2] = Math.min(255, Math.max(0, factor*(id.data[i+2]-128)+128+b));
+  }
+  ctx.putImageData(id, 0, 0);
+  canvas.toBlob(blob => { showResult('adjusted.jpg', blob); setProgress(100, 'Done! ✅'); }, 'image/jpeg', 0.92);
+}
+</script>
+</body>
+</html>
