@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="keywords" content="free pdf converter,pdf to word,pdf to jpg,image compress,resize image,freepdfconverterr"/>
+<meta name="author" content="Freepdfconverterr"/>
+<meta name="description" content="Free online PDF and Image tools. No signup required."/>
+<title>Freepdfconverterr — Free PDF &amp; Image Tools Online</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--surface:#13131a;--card:#1a1a24;--border:#2a2a3a;
+  --accent:#ff4d00;--accent2:#ff8c42;--text:#f0f0f5;--muted:#8888aa;
+  --success:#00e5a0;--blue:#4d8fff;--warn:#ffb800;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(10,10,15,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text);text-decoration:none}
+.logo span{color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:.7rem}
+.nav-badge{font-size:.67rem;background:var(--accent);color:#fff;padding:3px 9px;border-radius:99px;font-weight:700}
+.btn-nav-login{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-nav-login:hover{border-color:var(--accent);color:var(--accent)}
+.btn-nav-signup{background:var(--accent);border:none;color:#fff;padding:6px 14px;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-nav-signup:hover{background:var(--accent2)}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;cursor:pointer;display:none}
+.user-avatar.show{display:flex}
+.user-menu{position:absolute;top:60px;right:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.5rem;min-width:180px;display:none;z-index:200;box-shadow:0 10px 30px rgba(0,0,0,0.4)}
+.user-menu.open{display:block}
+.user-menu-name{padding:.5rem .8rem;font-size:.82rem;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border);margin-bottom:.3rem}
+.user-menu a{display:block;padding:.5rem .8rem;font-size:.83rem;color:var(--text);text-decoration:none;border-radius:7px;transition:background .15s;cursor:pointer}
+.user-menu a:hover{background:var(--surface)}
+.user-menu .logout{color:var(--accent)}
+
+/* HERO */
+.hero{text-align:center;padding:5rem 2rem 3rem;position:relative;overflow:hidden}
+.hero-glow{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:350px;background:radial-gradient(ellipse,rgba(255,77,0,0.14) 0%,transparent 70%);pointer-events:none}
+.hero-tag{display:inline-block;border:1px solid var(--accent);color:var(--accent);font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 13px;border-radius:99px;margin-bottom:1.1rem}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,4rem);font-weight:800;line-height:1.05;letter-spacing:-.02em}
+h1 em{color:var(--accent);font-style:normal}
+.hero-sub{margin:.9rem auto 0;color:var(--muted);font-size:.97rem;max-width:460px}
+.hero-stats{display:flex;justify-content:center;gap:2.5rem;margin-top:2rem;flex-wrap:wrap}
+.stat-num{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800}
+.stat-label{color:var(--muted);font-size:.76rem;margin-top:1px}
+
+/* AD */
+.ad-banner{max-width:728px;margin:0 auto 1.5rem;background:var(--surface);border:1px dashed var(--border);border-radius:10px;height:90px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.76rem}
+
+/* TABS */
+.tabs-wrap{display:flex;justify-content:center;gap:.5rem;padding:0 1rem 1.8rem;flex-wrap:wrap}
+.tab-btn{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:.5rem 1.2rem;border-radius:99px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}
+.tab-btn.active,.tab-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* SECTION */
+.section{max-width:1080px;margin:0 auto;padding:0 1.5rem 4rem}
+.section-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:.25rem}
+.section-sub{color:var(--muted);font-size:.87rem;margin-bottom:1.8rem}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:1rem}
+
+/* TOOL CARD */
+.tool-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.4rem;cursor:pointer;transition:all .22s;position:relative;overflow:hidden}
+.tool-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 10px 30px rgba(255,77,0,0.1)}
+.tool-card.hidden{display:none}
+.tool-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:.9rem}
+.tool-name{font-family:'Syne',sans-serif;font-size:.97rem;font-weight:700;margin-bottom:.25rem}
+.tool-desc{color:var(--muted);font-size:.82rem;line-height:1.5;margin-bottom:.8rem}
+.tool-badge{position:absolute;top:.9rem;right:.9rem;font-size:.6rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 8px;border-radius:99px}
+.badge-hot{background:rgba(255,77,0,0.2);color:var(--accent)}
+.badge-free{background:rgba(0,229,160,0.15);color:var(--success)}
+.badge-new{background:rgba(77,143,255,0.2);color:var(--blue)}
+.tool-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.4rem}
+.btn-report{background:none;border:none;color:var(--muted);font-size:.73rem;cursor:pointer;display:flex;align-items:center;gap:4px;padding:0;transition:color .2s}
+.btn-report:hover{color:var(--warn)}
+
+/* HOW IT WORKS */
+.how-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:3.5rem 2rem;text-align:center}
+.how-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1.5rem;margin-top:2rem;max-width:800px;margin-left:auto;margin-right:auto}
+.how-num{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--accent);opacity:.3;line-height:1}
+.how-title{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;margin:.3rem 0 .2rem}
+.how-desc{color:var(--muted);font-size:.82rem;line-height:1.5}
+
+/* OVERLAY */
+.overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem}
+.overlay.active{display:flex}
+
+/* MODAL BASE */
+.modal{background:var(--card);border:1px solid var(--border);border-radius:18px;width:100%;max-width:500px;padding:2rem;position:relative;max-height:92vh;overflow-y:auto}
+.modal-close{position:absolute;top:1rem;right:1rem;background:var(--surface);border:1px solid var(--border);color:var(--muted);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.modal-close:hover{border-color:var(--accent);color:var(--text)}
+.modal-title{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;margin-bottom:.25rem}
+.modal-sub{color:var(--muted);font-size:.85rem;margin-bottom:1.5rem}
+
+/* FORM ELEMENTS */
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:var(--muted);margin-bottom:.4rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:9px;padding:.65rem .85rem;font-size:.88rem;font-family:'DM Sans',sans-serif;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--accent)}
+.form-group textarea{resize:vertical;min-height:90px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+
+/* AUTH MODAL */
+.auth-tabs{display:flex;gap:0;margin-bottom:1.5rem;background:var(--surface);border-radius:10px;padding:4px}
+.auth-tab{flex:1;text-align:center;padding:.5rem;border-radius:7px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;color:var(--muted)}
+.auth-tab.active{background:var(--accent);color:#fff}
+.auth-panel{display:none}
+.auth-panel.active{display:block}
+.divider{display:flex;align-items:center;gap:.8rem;margin:1rem 0;color:var(--muted);font-size:.78rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.btn-google{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:9px;padding:.65rem;font-size:.88rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.6rem;transition:all .2s}
+.btn-google:hover{border-color:var(--blue);background:rgba(77,143,255,0.05)}
+.forgot-link{font-size:.78rem;color:var(--accent);text-decoration:none;cursor:pointer}
+.forgot-link:hover{text-decoration:underline}
+.auth-footer{text-align:center;font-size:.8rem;color:var(--muted);margin-top:1rem}
+.auth-footer span{color:var(--accent);cursor:pointer;font-weight:600}
+.auth-footer span:hover{text-decoration:underline}
+
+/* DROPZONE */
+.dropzone{border:2px dashed var(--border);border-radius:12px;padding:2rem 1.2rem;text-align:center;cursor:pointer;transition:all .22s;position:relative}
+.dropzone:hover,.dropzone.dragover{border-color:var(--accent);background:rgba(255,77,0,0.04)}
+.dropzone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-icon{font-size:2rem;margin-bottom:.6rem}
+.drop-text{font-size:.9rem;color:var(--muted)}
+.drop-text strong{color:var(--text)}
+.drop-formats{font-size:.74rem;color:var(--muted);margin-top:.3rem}
+
+/* FILE LIST */
+.file-list{margin-top:.9rem;display:flex;flex-direction:column;gap:.5rem}
+.file-item{display:flex;align-items:center;gap:.8rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem}
+.file-item-icon{font-size:1.3rem}
+.file-item-info{flex:1}
+.file-item-name{font-size:.85rem;font-weight:600;word-break:break-all}
+.file-item-size{font-size:.73rem;color:var(--muted)}
+.file-item-remove{cursor:pointer;color:var(--muted);font-size:.95rem;padding:0 4px}
+.file-item-remove:hover{color:var(--accent)}
+
+/* EXTRA OPTS */
+.extra-opts{margin-top:1rem;background:var(--surface);border-radius:10px;padding:1rem}
+.extra-opts label{display:block;font-size:.83rem;color:var(--muted);margin-bottom:.35rem;font-weight:600}
+.extra-opts input,.extra-opts select{width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:.5rem .7rem;font-size:.85rem;margin-bottom:.7rem;font-family:'DM Sans',sans-serif}
+.extra-opts input:last-child,.extra-opts select:last-child{margin-bottom:0}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+
+/* PROGRESS */
+.progress-wrap{margin-top:1rem;display:none}
+.progress-wrap.show{display:block}
+.progress-bar-bg{background:var(--surface);border-radius:99px;height:6px;overflow:hidden;margin-bottom:.4rem}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;width:0%;transition:width .3s ease}
+.progress-text{font-size:.79rem;color:var(--muted);text-align:center}
+
+/* RESULT */
+.result-area{display:none;margin-top:1rem}
+.result-area.show{display:block}
+.result-item{display:flex;align-items:center;gap:.8rem;background:rgba(0,229,160,0.08);border:1px solid rgba(0,229,160,0.25);border-radius:10px;padding:.9rem 1rem;margin-bottom:.5rem}
+.result-icon{font-size:1.5rem}
+.result-info{flex:1}
+.result-name{font-size:.85rem;font-weight:600;color:var(--success)}
+.result-size{font-size:.72rem;color:var(--muted)}
+.btn-dl{background:var(--success);color:#0a0a0f;border:none;border-radius:8px;padding:.5rem 1rem;font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap;display:inline-block}
+
+/* BUTTONS */
+.btn-primary{display:block;width:100%;margin-top:1.1rem;background:var(--accent);color:#fff;border:none;border-radius:11px;padding:.9rem;font-family:'Syne',sans-serif;font-size:.97rem;font-weight:700;cursor:pointer;transition:all .22s}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-secondary{display:block;width:100%;margin-top:.6rem;background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:11px;padding:.8rem;font-family:'Syne',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-secondary:hover{background:rgba(255,77,0,0.07)}
+
+/* REPORT MODAL */
+.report-chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem}
+.chip{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:.35rem .85rem;border-radius:99px;font-size:.78rem;cursor:pointer;transition:all .2s}
+.chip.selected{background:rgba(255,184,0,0.15);border-color:var(--warn);color:var(--warn)}
+
+/* TOAST */
+.toast-wrap{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;display:flex;flex-direction:column;gap:.5rem}
+.toast{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.75rem 1.1rem;font-size:.84rem;display:flex;align-items:center;gap:.7rem;box-shadow:0 6px 24px rgba(0,0,0,0.4);animation:toastIn .3s ease;max-width:300px}
+.toast.success{border-color:rgba(0,229,160,0.4)}
+.toast.error{border-color:rgba(255,77,0,0.4)}
+.toast.info{border-color:rgba(77,143,255,0.4)}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* FOOTER */
+footer{text-align:center;padding:2rem;color:var(--muted);font-size:.81rem;border-top:1px solid var(--border)}
+footer strong{color:var(--text)}
+
+/* PROFILE PANEL */
+.profile-panel{display:none;max-width:1080px;margin:0 auto;padding:0 1.5rem 4rem}
+.profile-panel.show{display:block}
+.profile-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;margin-bottom:1rem}
+.profile-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;margin-bottom:1rem}
+.profile-name{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800}
+.profile-email{color:var(--muted);font-size:.85rem;margin-top:.2rem}
+.reports-list{display:flex;flex-direction:column;gap:.6rem;margin-top:1rem}
+.report-entry{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem;display:flex;align-items:center;gap:.8rem}
+.report-status{font-size:.7rem;padding:2px 9px;border-radius:99px;font-weight:700}
+.status-pending{background:rgba(255,184,0,0.15);color:var(--warn)}
+.status-resolved{background:rgba(0,229,160,0.15);color:var(--success)}
+
+@media(max-width:600px){
+  nav{padding:.9rem 1.1rem}
+  .hero{padding:3.5rem 1.2rem 2.5rem}
+  .section,.profile-panel{padding:0 1.1rem 3rem}
+  .modal{padding:1.3rem}
+  .form-row{grid-template-columns:1fr}
+  .nav-right .btn-nav-login{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#" onclick="showMain()">Free<span>PDFConverterr</span></a>
+  <div class="nav-right">
+    <span class="nav-badge">100% Free</span>
+    <button class="btn-nav-login" onclick="openAuth('login')">Log In</button>
+    <button class="btn-nav-signup" onclick="openAuth('signup')">Sign Up</button>
+    <div class="user-avatar" id="userAvatar" onclick="toggleUserMenu()"></div>
+    <div class="user-menu" id="userMenu">
+      <div class="user-menu-name" id="userMenuName"></div>
+      <a onclick="showProfile()">👤 My Profile</a>
+      <a onclick="showMyReports()">🐛 My Reports</a>
+      <a onclick="openAuth('login')" class="logout" onclick="logoutUser()">🚪 Log Out</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <div class="hero-glow"></div>
+  <div class="hero-tag">⚡ Works in browser · No upload to server · Instant</div>
+  <h1>Free PDF &amp; Image<br/><em>Tools Online</em></h1>
+  <p class="hero-sub">Real working tools — all processing happens on your device. No server, no account, no watermark.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Working Tools</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Browser Based</div></div>
+    <div class="stat"><div class="stat-num">0</div><div class="stat-label">Server Upload</div></div>
+  </div>
+</section>
+
+<div class="ad-banner">📢 Advertisement — Google AdSense</div>
+
+<!-- TABS -->
+<div class="tabs-wrap" id="tabsSection">
+  <button class="tab-btn active" onclick="filterTools('all',this)">🔥 All Tools</button>
+  <button class="tab-btn" onclick="filterTools('pdf',this)">📄 PDF Tools</button>
+  <button class="tab-btn" onclick="filterTools('image',this)">🖼️ Image Tools</button>
+</div>
+
+<!-- TOOLS GRID -->
+<section class="section" id="toolsSection">
+  <div class="section-title" id="gridTitle">All Tools</div>
+  <p class="section-sub">Tap any tool — files never leave your device!</p>
+  <div class="tools-grid" id="toolsGrid">
+
+    <div class="tool-card" data-cat="pdf" data-tool="merge">
+      <span class="tool-badge badge-hot">🔥 Popular</span>
+      <div class="tool-icon" style="background:rgba(100,100,255,0.12)">🗂️</div>
+      <div class="tool-name">Merge PDF</div>
+      <div class="tool-desc">Combine multiple PDF files into one single document.</div>
+      <div class="tool-footer">
+        <span style="font-size:.75rem;color:var(--muted)">📄 PDF Tool</span>
+        <button class="btn-report" onclick="openReport(event,'Merge PDF')">⚑ Report Issue</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="pdf" data-tool="split">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(255,200,0,0.1)">✂️</div>
+      <div class="tool-name">Split PDF</div>
+      <div class="tool-desc">Split a PDF into separate pages or extract a page range.</div>
+      <div class="tool-footer">
+        <span style="font-size:.75rem;color:var(--muted)">📄 PDF Tool</span>
+        <button class="btn-report" onclick="openReport(event,'Split PDF')">⚑ Report Issue</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="pdf" data-tool="rotate">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(180,100,255,0.1)">🔃</div>
+      <div class="tool-name">Rotate PDF</div>
+      <div class="tool-desc">Rotate all PDF pages by 90°, 180°, or 270°.</div>
+      <div class="tool-footer">
+        <span style="font-size:.75rem;color:var(--muted)">📄 PDF Tool</span>
+        <button class="btn-report" onclick="openReport(event,'Rotate PDF')">⚑ Report Issue</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="pdf" data-tool="pdf2jpg">
+      <span class="tool-badge badge-hot">🔥 Popular</span>
+      <div class="tool-icon" style="background:rgba(255,140,66,0.12)">🖼️</div>
+      <div class="tool-name">PDF to JPG</div>
+      <div class="tool-desc">Convert every PDF page into a JPG image.</div>
+      <div class="tool-footer">
+        <span style="font-size:.75rem;color:var(--muted)">📄 PDF Tool</span>
+        <button class="btn-report" onclick="openReport(event,'PDF to JPG')">⚑ Report Issue</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="pdf" data-tool="jpg2pdf">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(0,229,160,0.1)">🔄</div>
+      <div class="tool-name">JPG / PNG to PDF</div>
+      <div class="tool-desc">Convert one or multiple images into a single PDF file.</div>
+      <div class="tool-footer">
+        <span style="font-size:.75rem;color:var(--muted)">📄 PDF Tool</span>
+        <button class="btn-report" onclick="openReport(event,'JPG to PDF')">⚑ Report Issue</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="pdf" data-tool="watermarkpdf">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(255,77,0,0.12)">💧</div>
+      <div class="tool-name">Watermark PDF</div>
+      <div class="tool-desc">Add custom text watermark to every page of your PDF.</div>
+      <div class="tool-footer">
+        <span style="font-size:.75rem;color:var(--muted)">📄 PDF Tool</span>
+        <button class="btn-report" onclick="openReport(event,'Watermark PDF')">⚑ Report Issue</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="image" data-tool="imgcompress">
+      <span class="tool-badge badge-hot">🔥 Popular</span>
+      <div class="tool-icon" style="background:rgba(0,229,160,0.12)">🗜️</div>
+      <div class="tool-name">Compress Image</div>
+      <div class="tool-desc">Reduce image file size. Choose quality level 1–100%.</div>
+      <div class="tool-footer">
+        <span style="font-size:.75rem;color:var(--muted)">🖼️ Image Tool</span>
+        <button class="btn-report" onclick="openReport(event,'Compress Image')">⚑ Report Issue</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="image" data-tool="imgresize">
+      <span class="tool-badge badge-new">✨ New</span>
+      <div class="tool-icon" style="background:rgba(77,143,255,0.12)">📐</div>
+      <div class="tool-name">Resize Image</div>
+      <div class="tool-desc">Resize any image to exact pixel dimensions.</div>
+      <div class="tool-footer">
+        <span style="font-size:.75rem;color:var(--muted)">🖼️ Image Tool</span>
+        <button class="btn-report" onclick="openReport(event,'Resize Image')">⚑ Report Issue</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="image" data-tool="cropimg">
+      <span class="tool-badge badge-new">✨ New</span>
+      <div class="tool-icon" style="background:rgba(168,85,247,0.12)">✂️</div>
+      <div class="tool-name">Crop Image</div>
+      <div class="tool-desc">Crop images by entering exact pixel coordinates.</div>
+      <div class="tool-footer">
+        <span style="font-size:.75rem;color:var(--muted)">🖼️ Image Tool</span>
+        <button class="btn-report" onclick="openReport(event,'Crop Image')">⚑ Report Issue</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="image" data-tool="jpg2png">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(255,77,143,0.12)">🔁</div>
+      <div class="tool-name">JPG to PNG</div>
+      <div class="tool-desc">Convert JPG images to PNG format instantly.</div>
+      <div class="tool-footer">
+        <span style="font-size:.75rem;color:var(--muted)">🖼️ Image Tool</span>
+        <button class="btn-report" onclick="openReport(event,'JPG to PNG')">⚑ Report Issue</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="image" data-tool="png2jpg">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(255,200,0,0.1)">🔀</div>
+      <div class="tool-name">PNG to JPG</div>
+      <div class="tool-desc">Convert PNG images to JPG to reduce file size.</div>
+      <div class="tool-footer">
+        <span style="font-size:.75rem;color:var(--muted)">🖼️ Image Tool</span>
+        <button class="btn-report" onclick="openReport(event,'PNG to JPG')">⚑ Report Issue</button>
+      </div>
+    </div>
+
+    <div class="tool-card" data-cat="image" data-tool="watermarkimg">
+      <span class="tool-badge badge-free">Free</span>
+      <div class="tool-icon" style="background:rgba(255,77,0,0.1)">💧</div>
+      <div class="tool-name">Watermark Image</div>
+      <div class="tool-desc">Add text watermark to your images.</div>
+      <div class="tool-footer">
+        <span style="font-size:.75rem;color:var(--muted)">🖼️ Image Tool</span>
+        <button class="btn-report" onclick="openReport(event,'Watermark Image')">⚑ Report Issue</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="section-title" style="text-align:center">How It Works</div>
+  <p style="color:var(--muted);font-size:.87rem;text-align:center;margin-top:.3rem">Three simple steps</p>
+  <div class="how-steps">
+    <div><div class="how-num">01</div><div class="how-title">Choose a Tool</div><div class="how-desc">Pick any PDF or Image tool from the grid above.</div></div>
+    <div><div class="how-num">02</div><div class="how-title">Upload File</div><div class="how-desc">Drag &amp; drop or click to select your file. Stays on your device.</div></div>
+    <div><div class="how-num">03</div><div class="how-title">Download Result</div><div class="how-desc">Processing happens instantly in your browser. Download immediately.</div></div>
+  </div>
+</section>
+
+<!-- PROFILE PANEL -->
+<section class="profile-panel" id="profilePanel">
+  <div style="margin-bottom:1.5rem">
+    <button onclick="showMain()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-size:.9rem;font-weight:600">← Back to Tools</button>
+  </div>
+  <div class="profile-card">
+    <div class="profile-avatar" id="profileAvatar"></div>
+    <div class="profile-name" id="profileName"></div>
+    <div class="profile-email" id="profileEmail"></div>
+  </div>
+  <div class="profile-card">
+    <div class="section-title" style="font-size:1.1rem;margin-bottom:1rem">🐛 My Submitted Reports</div>
+    <div class="reports-list" id="reportsList">
+      <div style="color:var(--muted);font-size:.85rem">No reports submitted yet.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Freepdfconverterr</strong> — All tools run in your browser. No files are uploaded to any server.<br/>
+  <span style="margin-top:.4rem;display:block">© 2025 Freepdfconverterr · Free forever</span>
+</footer>
+
+<!-- ═══════════════════ TOOL MODAL ═══════════════════ -->
+<div class="overlay" id="toolOverlay">
+  <div class="modal" id="toolModal">
+    <button class="modal-close" onclick="closeTool()">✕</button>
+    <div class="modal-title" id="toolModalTitle"></div>
+    <div class="modal-sub" id="toolModalSub"></div>
+    <div id="toolModalBody"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ AUTH MODAL ═══════════════════ -->
+<div class="overlay" id="authOverlay">
+  <div class="modal" style="max-width:420px">
+    <button class="modal-close" onclick="closeAuth()">✕</button>
+    <div class="modal-title">Welcome to FreePDFConverterr</div>
+    <div class="modal-sub">Sign in to save history &amp; submit reports</div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tabLogin" onclick="switchAuth('login')">Log In</div>
+      <div class="auth-tab" id="tabSignup" onclick="switchAuth('signup')">Sign Up</div>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="auth-panel active" id="panelLogin">
+      <button class="btn-google" onclick="googleAuth()">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.2l6.7-6.7C35.7 2.5 30.2 0 24 0 14.7 0 6.7 5.4 2.9 13.3l7.8 6.1C12.5 13 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4 6.9-10 6.9-17z"/><path fill="#FBBC05" d="M10.7 28.6A14.8 14.8 0 0 1 9.5 24c0-1.6.3-3.2.8-4.6L2.5 13.3A24 24 0 0 0 0 24c0 3.8.9 7.4 2.5 10.6l8.2-6z"/><path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.5l-7.5-5.8c-2 1.4-4.6 2.2-7.7 2.2-6.2 0-11.5-4.2-13.3-9.8l-8.2 6C6.7 42.6 14.7 48 24 48z"/></svg>
+        Continue with Google
+      </button>
+      <div class="divider">or</div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com"/>
+      </div>
+      <div class="form-group">
+        <label style="display:flex;justify-content:space-between;align-items:center">
+          Password <a class="forgot-link">Forgot password?</a>
+        </label>
+        <input type="password" id="loginPassword" placeholder="Your password"/>
+      </div>
+      <button class="btn-primary" onclick="doLogin()">Log In</button>
+      <div class="auth-footer">Don't have an account? <span onclick="switchAuth('signup')">Sign up free</span></div>
+    </div>
+
+    <!-- SIGNUP -->
+    <div class="auth-panel" id="panelSignup">
+      <button class="btn-google" onclick="googleAuth()">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.2l6.7-6.7C35.7 2.5 30.2 0 24 0 14.7 0 6.7 5.4 2.9 13.3l7.8 6.1C12.5 13 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4 6.9-10 6.9-17z"/><path fill="#FBBC05" d="M10.7 28.6A14.8 14.8 0 0 1 9.5 24c0-1.6.3-3.2.8-4.6L2.5 13.3A24 24 0 0 0 0 24c0 3.8.9 7.4 2.5 10.6l8.2-6z"/><path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.5l-7.5-5.8c-2 1.4-4.6 2.2-7.7 2.2-6.2 0-11.5-4.2-13.3-9.8l-8.2 6C6.7 42.6 14.7 48 24 48z"/></svg>
+        Sign up with Google
+      </button>
+      <div class="divider">or</div>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" id="signupFirst" placeholder="John"/></div>
+        <div class="form-group"><label>Last Name</label><input type="text" id="signupLast" placeholder="Doe"/></div>
+      </div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="signupEmail" placeholder="you@example.com"/></div>
+      <div class="form-group"><label>Password</label><input type="password" id="signupPassword" placeholder="Min. 6 characters"/></div>
+      <button class="btn-primary" onclick="doSignup()">Create Free Account</button>
+      <div class="auth-footer">Already have an account? <span onclick="switchAuth('login')">Log in</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ REPORT MODAL ═══════════════════ -->
+<div class="overlay" id="reportOverlay">
+  <div class="modal" style="max-width:440px">
+    <button class="modal-close" onclick="closeReport()">✕</button>
+    <div class="modal-title">⚑ Report an Issue</div>
+    <div class="modal-sub" id="reportModalSub">Tell us what's wrong</div>
+    <div class="form-group">
+      <label>What type of issue?</label>
+      <div class="report-chips" id="reportChips">
+        <div class="chip" onclick="selectChip(this)">Tool not working</div>
+        <div class="chip" onclick="selectChip(this)">File won't upload</div>
+        <div class="chip" onclick="selectChip(this)">Download failed</div>
+        <div class="chip" onclick="selectChip(this)">Wrong output</div>
+        <div class="chip" onclick="selectChip(this)">Page crashed</div>
+        <div class="chip" onclick="selectChip(this)">Other</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Describe the problem (optional)</label>
+      <textarea id="reportDescription" placeholder="e.g. When I upload a PDF and click convert, nothing happens..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Your email (optional — for follow-up)</label>
+      <input type="email" id="reportEmail" placeholder="you@example.com"/>
+    </div>
+    <button class="btn-primary" onclick="submitReport()">Submit Report</button>
+    <button class="btn-secondary" onclick="closeReport()">Cancel</button>
+  </div>
+</div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────
+let currentUser = JSON.parse(localStorage.getItem('fpdf_user') || 'null');
+let currentTool = null;
+let toolFiles   = [];
+let reportTool  = '';
+let reports     = JSON.parse(localStorage.getItem('fpdf_reports') || '[]');
+
+// ─── INIT ─────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  updateNavUI();
+  attachCardClicks();
+});
+
+function attachCardClicks() {
+  document.querySelectorAll('.tool-card').forEach(card => {
+    card.addEventListener('click', e => {
+      if (e.target.closest('.btn-report')) return;
+      openTool(card.dataset.tool);
+    });
+  });
+}
+
+// ─── NAV / USER ───────────────────────────────────────────
+function updateNavUI() {
+  const loginBtn  = document.querySelector('.btn-nav-login');
+  const signupBtn = document.querySelector('.btn-nav-signup');
+  const avatar    = document.getElementById('userAvatar');
+  if (currentUser) {
+    loginBtn.style.display  = 'none';
+    signupBtn.style.display = 'none';
+    avatar.classList.add('show');
+    avatar.textContent = currentUser.name.charAt(0).toUpperCase();
+    document.getElementById('userMenuName').textContent = currentUser.name;
+  } else {
+    loginBtn.style.display  = '';
+    signupBtn.style.display = '';
+    avatar.classList.remove('show');
+    document.getElementById('userMenu').classList.remove('open');
+  }
+}
+
+function toggleUserMenu() {
+  document.getElementById('userMenu').classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('#userAvatar') && !e.target.closest('#userMenu'))
+    document.getElementById('userMenu').classList.remove('open');
+});
+
+function logoutUser() {
+  currentUser = null;
+  localStorage.removeItem('fpdf_user');
+  updateNavUI();
+  showMain();
+  toast('Logged out successfully', 'info');
+}
+
+function showProfile() {
+  document.getElementById('userMenu').classList.remove('open');
+  document.getElementById('heroSection').style.display  = 'none';
+  document.getElementById('tabsSection').style.display  = 'none';
+  document.getElementById('toolsSection').style.display = 'none';
+  document.querySelector('.ad-banner').style.display    = 'none';
+  document.querySelector('.how-section').style.display  = 'none';
+  document.getElementById('profilePanel').classList.add('show');
+  document.getElementById('profileAvatar').textContent  = currentUser.name.charAt(0).toUpperCase();
+  document.getElementById('profileName').textContent    = currentUser.name;
+  document.getElementById('profileEmail').textContent   = currentUser.email;
+  renderReports();
+}
+
+function showMyReports() {
+  document.getElementById('userMenu').classList.remove('open');
+  showProfile();
+}
+
+function showMain() {
+  document.getElementById('heroSection').style.display  = '';
+  document.getElementById('tabsSection').style.display  = '';
+  document.getElementById('toolsSection').style.display = '';
+  document.querySelector('.ad-banner').style.display    = '';
+  document.querySelector('.how-section').style.display  = '';
+  document.getElementById('profilePanel').classList.remove('show');
+}
+
+function renderReports() {
+  const list = document.getElementById('reportsList');
+  const mine = reports.filter(r => !currentUser || r.userEmail === currentUser.email);
+  if (!mine.length) { list.innerHTML = '<div style="color:var(--muted);font-size:.85rem">No reports submitted yet.</div>'; return; }
+  list.innerHTML = mine.map(r => `
+    <div class="report-entry">
+      <div style="flex:1">
+        <div style="font-size:.85rem;font-weight:600">${r.tool}</div>
+        <div style="font-size:.75rem;color:var(--muted)">${r.type} · ${r.date}</div>
+        ${r.desc ? `<div style="font-size:.78rem;color:var(--muted);margin-top:.2rem">${r.desc}</div>` : ''}
+      </div>
+      <span class="report-status status-pending">Pending</span>
+    </div>`).join('');
+}
+
+// ─── AUTH ─────────────────────────────────────────────────
+function openAuth(tab) {
+  document.getElementById('authOverlay').classList.add('active');
+  switchAuth(tab);
+}
+function closeAuth() {
+  document.getElementById('authOverlay').classList.remove('active');
+}
+function switchAuth(tab) {
+  document.getElementById('tabLogin').classList.toggle('active',   tab === 'login');
+  document.getElementById('tabSignup').classList.toggle('active',  tab === 'signup');
+  document.getElementById('panelLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('panelSignup').classList.toggle('active',tab === 'signup');
+}
+
+function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPassword').value;
+  if (!email || !pass) { toast('Please fill in all fields', 'error'); return; }
+  const users = JSON.parse(localStorage.getItem('fpdf_users') || '[]');
+  const found = users.find(u => u.email === email && u.password === pass);
+  if (!found) { toast('Invalid email or password', 'error'); return; }
+  currentUser = { name: found.name, email: found.email };
+  localStorage.setItem('fpdf_user', JSON.stringify(currentUser));
+  closeAuth();
+  updateNavUI();
+  toast(`Welcome back, ${found.name}! 👋`, 'success');
+}
+
+function doSignup() {
+  const first = document.getElementById('signupFirst').value.trim();
+  const last  = document.getElementById('signupLast').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const pass  = document.getElementById('signupPassword').value;
+  if (!first || !email || !pass) { toast('Please fill in all required fields', 'error'); return; }
+  if (pass.length < 6) { toast('Password must be at least 6 characters', 'error'); return; }
+  const users = JSON.parse(localStorage.getItem('fpdf_users') || '[]');
+  if (users.find(u => u.email === email)) { toast('Email already registered', 'error'); return; }
+  const newUser = { name: `${first} ${last}`.trim(), email, password: pass };
+  users.push(newUser);
+  localStorage.setItem('fpdf_users', JSON.stringify(users));
+  currentUser = { name: newUser.name, email: newUser.email };
+  localStorage.setItem('fpdf_user', JSON.stringify(currentUser));
+  closeAuth();
+  updateNavUI();
+  toast(`Account created! Welcome, ${first}! 🎉`, 'success');
+}
+
+function googleAuth() {
+  toast('Google sign-in requires backend integration', 'info');
+}
+
+// ─── TABS / FILTER ────────────────────────────────────────
+function filterTools(cat, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tool-card').forEach(c => {
+    c.classList.toggle('hidden', cat !== 'all' && c.dataset.cat !== cat);
+  });
+  const titles = { all: 'All Tools', pdf: 'PDF Tools', image: 'Image Tools' };
+  document.getElementById('gridTitle').textContent = titles[cat];
+}
+
+// ─── TOOL MODAL ───────────────────────────────────────────
+const toolConfig = {
+  merge:      { title:'Merge PDF',        sub:'Combine multiple PDFs into one file.',          accept:'.pdf',   multi:true,  opts:'none' },
+  split:      { title:'Split PDF',        sub:'Extract pages from a PDF file.',                accept:'.pdf',   multi:false, opts:'split' },
+  rotate:     { title:'Rotate PDF',       sub:'Rotate all pages in a PDF.',                    accept:'.pdf',   multi:false, opts:'rotate' },
+  pdf2jpg:    { title:'PDF to JPG',       sub:'Convert each PDF page to a JPG image.',         accept:'.pdf',   multi:false, opts:'quality' },
+  jpg2pdf:    { title:'JPG / PNG to PDF', sub:'Combine images into a single PDF.',             accept:'image/*',multi:true,  opts:'none' },
+  watermarkpdf:{ title:'Watermark PDF',   sub:'Add a text watermark to every PDF page.',       accept:'.pdf',   multi:false, opts:'watermark' },
+  imgcompress:{ title:'Compress Image',   sub:'Reduce image file size with quality control.',  accept:'image/*',multi:false, opts:'quality' },
+  imgresize:  { title:'Resize Image',     sub:'Resize image to exact pixel dimensions.',       accept:'image/*',multi:false, opts:'resize' },
+  cropimg:    { title:'Crop Image',       sub:'Crop image by pixel coordinates.',              accept:'image/*',multi:false, opts:'crop' },
+  jpg2png:    { title:'JPG to PNG',       sub:'Convert JPG to PNG format.',                    accept:'image/jpeg',multi:false,opts:'none' },
+  png2jpg:    { title:'PNG to JPG',       sub:'Convert PNG to JPG format.',                    accept:'image/png', multi:false,opts:'quality' },
+  watermarkimg:{ title:'Watermark Image', sub:'Add a text watermark to your image.',           accept:'image/*',multi:false, opts:'watermark' },
+};
+
+function openTool(id) {
+  const cfg = toolConfig[id]; if (!cfg) return;
+  currentTool = id; toolFiles = [];
+  document.getElementById('toolModalTitle').textContent = cfg.title;
+  document.getElementById('toolModalSub').textContent   = cfg.sub;
+  document.getElementById('toolModalBody').innerHTML    = buildToolBody(cfg);
+  document.getElementById('toolOverlay').classList.add('active');
+  setupDropzone();
+}
+
+function closeTool() {
+  document.getElementById('toolOverlay').classList.remove('active');
+  currentTool = null; toolFiles = [];
+}
+
+function buildToolBody(cfg) {
+  const multiAttr = cfg.multi ? 'multiple' : '';
+  let optsHTML = '';
+  if (cfg.opts === 'quality')
+    optsHTML = `<div class="extra-opts"><label>Quality (1–100)</label><input type="range" id="optQuality" min="1" max="100" value="85" oninput="document.getElementById('qval').textContent=this.value"/> <span id="qval">85</span>%</div>`;
+  if (cfg.opts === 'rotate')
+    optsHTML = `<div class="extra-opts"><label>Rotation</label><select id="optRotate"><option value="90">90° Clockwise</option><option value="180">180°</option><option value="270">270° (90° CCW)</option></select></div>`;
+  if (cfg.opts === 'split')
+    optsHTML = `<div class="extra-opts"><label>Page Range (e.g. 1-3 or leave blank for all)</label><input type="text" id="optPages" placeholder="e.g. 1-3"/></div>`;
+  if (cfg.opts === 'watermark')
+    optsHTML = `<div class="extra-opts"><label>Watermark Text</label><input type="text" id="optWatermark" placeholder="e.g. CONFIDENTIAL"/></div>`;
+  if (cfg.opts === 'resize')
+    optsHTML = `<div class="extra-opts"><div class="row-2"><div><label>Width (px)</label><input type="number" id="optW" placeholder="800"/></div><div><label>Height (px)</label><input type="number" id="optH" placeholder="600"/></div></div></div>`;
+  if (cfg.opts === 'crop')
+    optsHTML = `<div class="extra-opts"><div class="row-2"><div><label>X (px)</label><input type="number" id="optX" placeholder="0"/></div><div><label>Y (px)</label><input type="number" id="optY" placeholder="0"/></div></div><div class="row-2"><div><label>Width (px)</label><input type="number" id="optCW" placeholder="400"/></div><div><label>Height (px)</label><input type="number" id="optCH" placeholder="300"/></div></div></div>`;
+
+  return `
+    <div class="dropzone" id="dropzone">
+      <input type="file" id="fileInput" accept="${cfg.accept}" ${multiAttr}/>
+      <div class="drop-icon">📁</div>
+      <div class="drop-text"><strong>Click to choose</strong> or drag &amp; drop</div>
+      <div class="drop-formats">Accepted: ${cfg.accept}</div>
+    </div>
+    <div class="file-list" id="fileList"></div>
+    ${optsHTML}
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar-bg"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="progress-text" id="progressText">Processing…</div>
+    </div>
+    <div class="result-area" id="resultArea"></div>
+    <button class="btn-primary" id="convertBtn" onclick="runTool()">⚡ Convert Now</button>`;
+}
+
+function setupDropzone() {
+  setTimeout(() => {
+    const dz  = document.getElementById('dropzone');
+    const inp = document.getElementById('fileInput');
+    if (!dz || !inp) return;
+    inp.addEventListener('change', () => handleFiles(inp.files));
+    dz.addEventListener('dragover',  e => { e.preventDefault(); dz.classList.add('dragover'); });
+    dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
+    dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+  }, 50);
+}
+
+function handleFiles(files) {
+  for (const f of files) toolFiles.push(f);
+  renderFileList();
+}
+
+function renderFileList() {
+  const list = document.getElementById('fileList');
+  if (!list) return;
+  list.innerHTML = toolFiles.map((f,i) => `
+    <div class="file-item">
+      <div class="file-item-icon">${f.type.includes('pdf') ? '📄' : '🖼️'}</div>
+      <div class="file-item-info">
+        <div class="file-item-name">${f.name}</div>
+        <div class="file-item-size">${(f.size/1024).toFixed(1)} KB</div>
+      </div>
+      <div class="file-item-remove" onclick="removeFile(${i})">✕</div>
+    </div>`).join('');
+}
+
+function removeFile(i) { toolFiles.splice(i,1); renderFileList(); }
+
+function setProgress(pct, txt) {
+  document.getElementById('progressWrap').classList.add('show');
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = txt;
+}
+
+function showResult(items) {
+  const area = document.getElementById('resultArea');
+  area.classList.add('show');
+  area.innerHTML = items.map(it => `
+    <div class="result-item">
+      <div class="result-icon">✅</div>
+      <div class="result-info">
+        <div class="result-name">${it.name}</div>
+        <div class="result-size">${it.size}</div>
+      </div>
+      <a class="btn-dl" href="${it.url}" download="${it.name}">⬇ Download</a>
+    </div>`).join('');
+  document.getElementById('convertBtn').disabled = false;
+}
+
+// ─── RUN TOOL ─────────────────────────────────────────────
+async function runTool() {
+  if (!toolFiles.length) { toast('Please select a file first!', 'error'); return; }
+  document.getElementById('convertBtn').disabled = true;
+  document.getElementById('resultArea').classList.remove('show');
+  try {
+    switch(currentTool) {
+      case 'merge':       await toolMergePDF(); break;
+      case 'split':       await toolSplitPDF(); break;
+      case 'rotate':      await toolRotatePDF(); break;
+      case 'pdf2jpg':     await toolPDF2JPG(); break;
+      case 'jpg2pdf':     await toolJPG2PDF(); break;
+      case 'watermarkpdf':await toolWatermarkPDF(); break;
+      case 'imgcompress': await toolCompressImg(); break;
+      case 'imgresize':   await toolResizeImg(); break;
+      case 'cropimg':     await toolCropImg(); break;
+      case 'jpg2png':     await toolConvertImg('png','image/png'); break;
+      case 'png2jpg':     await toolConvertImg('jpg','image/jpeg'); break;
+      case 'watermarkimg':await toolWatermarkImg(); break;
+      default: toast('Tool not implemented yet','error');
+    }
+  } catch(e) {
+    console.error(e);
+    toast('Error: ' + e.message, 'error');
+    document.getElementById('convertBtn').disabled = false;
+  }
+}
+
+// ─── PDF TOOLS ────────────────────────────────────────────
+async function toolMergePDF() {
+  setProgress(10,'Loading PDFs…');
+  const { PDFDocument } = PDFLib;
+  const merged = await PDFDocument.create();
+  for (let i=0; i<toolFiles.length; i++) {
+    setProgress(10 + Math.round(70*(i/toolFiles.length)), `Merging ${i+1}/${toolFiles.length}…`);
+    const buf = await toolFiles[i].arrayBuffer();
+    const src = await PDFDocument.load(buf);
+    const pages = await merged.copyPages(src, src.getPageIndices());
+    pages.forEach(p => merged.addPage(p));
+  }
+  setProgress(90,'Saving…');
+  const bytes = await merged.save();
+  const url   = URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+  setProgress(100,'Done!');
+  showResult([{name:'merged.pdf', size: sizeStr(bytes.length), url}]);
+}
+
+async function toolSplitPDF() {
+  setProgress(10,'Loading PDF…');
+  const { PDFDocument } = PDFLib;
+  const buf   = await toolFiles[0].arrayBuffer();
+  const src   = await PDFDocument.load(buf);
+  const total = src.getPageCount();
+  const rangeStr = (document.getElementById('optPages')||{}).value||'';
+  let indices = [];
+  if (rangeStr.trim()) {
+    const parts = rangeStr.split('-');
+    const s = Math.max(1,parseInt(parts[0])||1)-1;
+    const e = Math.min(total,(parseInt(parts[1])||total))-1;
+    for(let i=s;i<=e;i++) indices.push(i);
+  } else {
+    indices = src.getPageIndices();
+  }
+  setProgress(50,'Splitting…');
+  const out = await PDFDocument.create();
+  const pages = await out.copyPages(src, indices);
+  pages.forEach(p => out.addPage(p));
+  const bytes = await out.save();
+  const url   = URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+  setProgress(100,'Done!');
+  showResult([{name:'split.pdf', size:sizeStr(bytes.length), url}]);
+}
+
+async function toolRotatePDF() {
+  setProgress(10,'Loading PDF…');
+  const { PDFDocument, degrees } = PDFLib;
+  const buf  = await toolFiles[0].arrayBuffer();
+  const pdf  = await PDFDocument.load(buf);
+  const deg  = parseInt((document.getElementById('optRotate')||{value:'90'}).value);
+  pdf.getPages().forEach(p => p.setRotation(degrees((p.getRotation().angle + deg) % 360)));
+  setProgress(70,'Saving…');
+  const bytes = await pdf.save();
+  const url   = URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+  setProgress(100,'Done!');
+  showResult([{name:'rotated.pdf', size:sizeStr(bytes.length), url}]);
+}
+
+async function toolPDF2JPG() {
+  setProgress(5,'Loading PDF…');
+  const buf    = await toolFiles[0].arrayBuffer();
+  const pdf    = await pdfjsLib.getDocument({data: buf}).promise;
+  const count  = pdf.numPages;
+  const qual   = parseFloat((document.getElementById('optQuality')||{value:85}).value)/100;
+  const results= [];
+  for(let i=1;i<=count;i++) {
+    setProgress(Math.round(5+85*(i/count)),`Rendering page ${i}/${count}…`);
+    const page    = await pdf.getPage(i);
+    const vp      = page.getViewport({scale:1.5});
+    const canvas  = document.createElement('canvas');
+    canvas.width  = vp.width; canvas.height = vp.height;
+    await page.render({canvasContext:canvas.getContext('2d'),viewport:vp}).promise;
+    const blob = await new Promise(res => canvas.toBlob(res,'image/jpeg',qual));
+    const url  = URL.createObjectURL(blob);
+    results.push({name:`page-${i}.jpg`, size:sizeStr(blob.size), url});
+  }
+  setProgress(100,'Done!');
+  showResult(results);
+}
+
+async function toolJPG2PDF() {
+  setProgress(10,'Building PDF…');
+  const { PDFDocument } = PDFLib;
+  const pdf = await PDFDocument.create();
+  for(let i=0;i<toolFiles.length;i++){
+    setProgress(10+Math.round(80*(i/toolFiles.length)),`Adding image ${i+1}/${toolFiles.length}…`);
+    const buf  = await toolFiles[i].arrayBuffer();
+    const type = toolFiles[i].type;
+    let img;
+    if(type==='image/jpeg'||type==='image/jpg') img = await pdf.embedJpg(buf);
+    else img = await pdf.embedPng(buf);
+    const page = pdf.addPage([img.width, img.height]);
+    page.drawImage(img,{x:0,y:0,width:img.width,height:img.height});
+  }
+  setProgress(95,'Saving…');
+  const bytes = await pdf.save();
+  const url   = URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+  setProgress(100,'Done!');
+  showResult([{name:'images.pdf', size:sizeStr(bytes.length), url}]);
+}
+
+async function toolWatermarkPDF() {
+  setProgress(10,'Loading PDF…');
+  const { PDFDocument, rgb, degrees } = PDFLib;
+  const text = ((document.getElementById('optWatermark')||{}).value||'WATERMARK').trim()||'WATERMARK';
+  const buf  = await toolFiles[0].arrayBuffer();
+  const pdf  = await PDFDocument.load(buf);
+  const font = await pdf.embedFont(PDFLib.StandardFonts.HelveticaBold);
+  pdf.getPages().forEach(page => {
+    const {width,height} = page.getSize();
+    page.drawText(text,{x:width/2-text.length*14,y:height/2,size:48,font,color:rgb(0.7,0.7,0.7),opacity:0.35,rotate:degrees(45)});
+  });
+  setProgress(80,'Saving…');
+  const bytes = await pdf.save();
+  const url   = URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+  setProgress(100,'Done!');
+  showResult([{name:'watermarked.pdf', size:sizeStr(bytes.length), url}]);
+}
+
+// ─── IMAGE TOOLS ──────────────────────────────────────────
+function loadImage(file) {
+  return new Promise((res,rej)=>{
+    const img=new Image(), url=URL.createObjectURL(file);
+    img.onload=()=>{ URL.revokeObjectURL(url); res(img); };
+    img.onerror=rej; img.src=url;
+  });
+}
+
+async function toolCompressImg() {
+  setProgress(20,'Compressing…');
+  const qual  = parseFloat((document.getElementById('optQuality')||{value:85}).value)/100;
+  const img   = await loadImage(toolFiles[0]);
+  const canvas= document.createElement('canvas');
+  canvas.width=img.width; canvas.height=img.height;
+  canvas.getContext('2d').drawImage(img,0,0);
+  setProgress(70,'Encoding…');
+  const blob  = await new Promise(res=>canvas.toBlob(res,'image/jpeg',qual));
+  const url   = URL.createObjectURL(blob);
+  setProgress(100,'Done!');
+  showResult([{name:'compressed.jpg', size:sizeStr(blob.size), url}]);
+}
+
+async function toolResizeImg() {
+  setProgress(20,'Resizing…');
+  const img  = await loadImage(toolFiles[0]);
+  const w    = parseInt((document.getElementById('optW')||{}).value)||img.width;
+  const h    = parseInt((document.getElementById('optH')||{}).value)||img.height;
+  const canvas=document.createElement('canvas');
+  canvas.width=w; canvas.height=h;
+  canvas.getContext('2d').drawImage(img,0,0,w,h);
+  setProgress(80,'Encoding…');
+  const blob = await new Promise(res=>canvas.toBlob(res,'image/jpeg',0.92));
+  const url  = URL.createObjectURL(blob);
+  setProgress(100,'Done!');
+  showResult([{name:'resized.jpg', size:sizeStr(blob.size), url}]);
+}
+
+async function toolCropImg() {
+  setProgress(20,'Cropping…');
+  const img = await loadImage(toolFiles[0]);
+  const x   = parseInt((document.getElementById('optX')||{}).value)||0;
+  const y   = parseInt((document.getElementById('optY')||{}).value)||0;
+  const cw  = parseInt((document.getElementById('optCW')||{}).value)||(img.width-x);
+  const ch  = parseInt((document.getElementById('optCH')||{}).value)||(img.height-y);
+  const canvas=document.createElement('canvas');
+  canvas.width=cw; canvas.height=ch;
+  canvas.getContext('2d').drawImage(img,x,y,cw,ch,0,0,cw,ch);
+  setProgress(80,'Encoding…');
+  const blob = await new Promise(res=>canvas.toBlob(res,'image/jpeg',0.92));
+  const url  = URL.createObjectURL(blob);
+  setProgress(100,'Done!');
+  showResult([{name:'cropped.jpg', size:sizeStr(blob.size), url}]);
+}
+
+async function toolConvertImg(ext, mimeType) {
+  setProgress(30,'Converting…');
+  const img = await loadImage(toolFiles[0]);
+  const canvas=document.createElement('canvas');
+  canvas.width=img.width; canvas.height=img.height;
+  const ctx=canvas.getContext('2d');
+  if(mimeType==='image/jpeg'){ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);}
+  ctx.drawImage(img,0,0);
+  setProgress(70,'Encoding…');
+  const qual = parseFloat((document.getElementById('optQuality')||{value:92}).value)/100;
+  const blob = await new Promise(res=>canvas.toBlob(res,mimeType,qual));
+  const url  = URL.createObjectURL(blob);
+  setProgress(100,'Done!');
+  const base = toolFiles[0].name.replace(/\.[^.]+$/,'');
+  showResult([{name:`${base}.${ext}`, size:sizeStr(blob.size), url}]);
+}
+
+async function toolWatermarkImg() {
+  setProgress(20,'Adding watermark…');
+  const text  = ((document.getElementById('optWatermark')||{}).value||'WATERMARK').trim()||'WATERMARK';
+  const img   = await loadImage(toolFiles[0]);
+  const canvas= document.createElement('canvas');
+  canvas.width=img.width; canvas.height=img.height;
+  const ctx   = canvas.getContext('2d');
+  ctx.drawImage(img,0,0);
+  ctx.save();
+  ctx.globalAlpha=0.35;
+  ctx.fillStyle='#ffffff';
+  const fs = Math.max(24, Math.floor(img.width/12));
+  ctx.font=`bold ${fs}px sans-serif`;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.translate(img.width/2, img.height/2);
+  ctx.rotate(-Math.PI/6);
+  ctx.fillText(text,0,0);
+  ctx.restore();
+  setProgress(80,'Encoding…');
+  const blob = await new Promise(res=>canvas.toBlob(res,'image/jpeg',0.92));
+  const url  = URL.createObjectURL(blob);
+  setProgress(100,'Done!');
+  showResult([{name:'watermarked.jpg', size:sizeStr(blob.size), url}]);
+}
+
+// ─── REPORT ───────────────────────────────────────────────
+function openReport(evt, toolName) {
+  evt.stopPropagation();
+  reportTool = toolName;
+  document.getElementById('reportModalSub').textContent = `Reporting issue with: ${toolName}`;
+  document.getElementById('reportDescription').value = '';
+  document.getElementById('reportEmail').value = currentUser ? currentUser.email : '';
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('reportOverlay').classList.add('active');
+}
+
+function closeReport() {
+  document.getElementById('reportOverlay').classList.remove('active');
+}
+
+function selectChip(el) {
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function submitReport() {
+  const chip  = document.querySelector('.chip.selected');
+  const type  = chip ? chip.textContent : 'General issue';
+  const desc  = document.getElementById('reportDescription').value.trim();
+  const email = document.getElementById('reportEmail').value.trim();
+  const entry = {
+    tool: reportTool, type, desc,
+    userEmail: email || (currentUser ? currentUser.email : 'anonymous'),
+    date: new Date().toLocaleDateString()
+  };
+  reports.push(entry);
+  localStorage.setItem('fpdf_reports', JSON.stringify(reports));
+  closeReport();
+  toast(`✅ Report submitted for "${reportTool}". Thank you!`, 'success');
+}
+
+// ─── TOAST ────────────────────────────────────────────────
+function toast(msg, type='info') {
+  const icons = {success:'✅', error:'❌', info:'ℹ️'};
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
+  document.getElementById('toastWrap').appendChild(el);
+  setTimeout(()=>el.remove(), 4000);
+}
+
+// ─── HELPERS ──────────────────────────────────────────────
+function sizeStr(bytes) {
+  if(bytes<1024) return bytes+' B';
+  if(bytes<1024*1024) return (bytes/1024).toFixed(1)+' KB';
+  return (bytes/(1024*1024)).toFixed(2)+' MB';
+}
+</script>
+</body>
+</html>
