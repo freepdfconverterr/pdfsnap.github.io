@@ -1,10 +1,11 @@
 // Freepdfconverterr Service Worker
-// Version 1.0
+// Version 4.0
 
 const CACHE_NAME = 'freepdfconverterr-v4';
 const ASSETS = [
   '/',
   '/index.html',
+  '/app.apk',
   '/blog.html',
   '/blog-1.html',
   '/blog-2.html',
@@ -18,6 +19,7 @@ const ASSETS = [
   '/privacy-policy.html',
   '/terms.html',
   '/manifest.json',
+  '/sitemap.xml',
   'https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap'
 ];
 
