@@ -55,7 +55,6 @@ footer a{color:var(--acc);text-decoration:none}
 </style>
 </head>
 <body>
-
 <nav>
   <a class="logo" href="index.html">Free<span>PDFConverterr</span></a>
   <div class="nav-links">
@@ -65,11 +64,9 @@ footer a{color:var(--acc);text-decoration:none}
     <a href="privacy-policy.html">Privacy</a>
   </div>
 </nav>
-
 <div class="container">
   <h1>Contact <span>Us</span></h1>
   <p class="sub">Have a question, suggestion, or found a bug? We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.</p>
-
   <div class="info-card">
     <div class="info-icon">🌐</div>
     <div><div class="info-title">Website</div><div class="info-val">freepdfconverterr.github.io</div></div>
@@ -78,17 +75,10 @@ footer a{color:var(--acc);text-decoration:none}
     <div class="info-icon">⚡</div>
     <div><div class="info-title">Response Time</div><div class="info-val">Usually within 24–48 hours</div></div>
   </div>
-
   <div class="card" style="margin-top:1.5rem">
     <h2>📩 Send Us a Message</h2>
-    <div class="fg">
-      <label>Your Name</label>
-      <input type="text" id="cName" placeholder="John Doe"/>
-    </div>
-    <div class="fg">
-      <label>Your Email</label>
-      <input type="email" id="cEmail" placeholder="you@example.com"/>
-    </div>
+    <div class="fg"><label>Your Name</label><input type="text" id="cName" placeholder="John Doe"/></div>
+    <div class="fg"><label>Your Email</label><input type="email" id="cEmail" placeholder="you@example.com"/></div>
     <div class="fg">
       <label>Subject</label>
       <select id="cSubject">
@@ -100,66 +90,40 @@ footer a{color:var(--acc);text-decoration:none}
         <option value="Other">📝 Other</option>
       </select>
     </div>
-    <div class="fg">
-      <label>Message</label>
-      <textarea id="cMsg" placeholder="Write your message here..."></textarea>
-    </div>
+    <div class="fg"><label>Message</label><textarea id="cMsg" placeholder="Write your message here..."></textarea></div>
     <button class="btn-submit" id="submitBtn" onclick="submitContact()">Send Message 🚀</button>
     <div class="success-msg" id="successMsg">✅ Message sent successfully! We'll get back to you soon.</div>
     <div class="error-msg" id="errorMsg">❌ Something went wrong. Please try again!</div>
   </div>
 </div>
-
 <footer>
   <strong>Freepdfconverterr</strong> — All tools run entirely in your browser. No files uploaded to any server.<br/>
-  <span style="margin-top:.3rem;display:block">© 2026 Freepdfconverterr ·
-    <a href="privacy-policy.html">Privacy Policy</a> ·
-    <a href="terms.html">Terms of Service</a> ·
-    <a href="contact.html">Contact</a> ·
-    <a href="blog.html">Blog</a>
-  </span>
+  <span style="margin-top:.3rem;display:block">© 2026 Freepdfconverterr · <a href="privacy-policy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a> · <a href="contact.html">Contact</a> · <a href="blog.html">Blog</a></span>
 </footer>
-
 <script>
 async function submitContact() {
-  var name    = document.getElementById('cName').value.trim();
-  var email   = document.getElementById('cEmail').value.trim();
+  var name = document.getElementById('cName').value.trim();
+  var email = document.getElementById('cEmail').value.trim();
   var subject = document.getElementById('cSubject').value;
-  var msg     = document.getElementById('cMsg').value.trim();
-
-  // Validation
-  if (!name || !email || !subject || !msg) {
-    alert('Please fill in all fields!'); return;
-  }
-  if (!email.includes('@') || !email.includes('.')) {
-    alert('Please enter a valid email address!'); return;
-  }
-
+  var msg = document.getElementById('cMsg').value.trim();
+  if (!name || !email || !subject || !msg) { alert('Please fill in all fields!'); return; }
+  if (!email.includes('@') || !email.includes('.')) { alert('Please enter a valid email address!'); return; }
   var btn = document.getElementById('submitBtn');
   var successMsg = document.getElementById('successMsg');
   var errorMsg = document.getElementById('errorMsg');
-
-  btn.disabled = true;
-  btn.textContent = 'Sending...';
-  successMsg.classList.remove('show');
-  errorMsg.classList.remove('show');
-
+  btn.disabled = true; btn.textContent = 'Sending...';
+  successMsg.classList.remove('show'); errorMsg.classList.remove('show');
   try {
     var response = await fetch('https://formspree.io/f/mlgpvjqg', {
       method: 'POST',
       headers: {'Content-Type':'application/json','Accept':'application/json'},
       body: JSON.stringify({name:name, email:email, subject:subject, message:msg, date:new Date().toLocaleDateString()})
     });
-    if (response.ok) {
-      btn.style.display = 'none';
-      successMsg.classList.add('show');
-    } else {
-      throw new Error('Server error');
-    }
+    if (response.ok) { btn.style.display='none'; successMsg.classList.add('show'); }
+    else { throw new Error('Server error'); }
   } catch(e) {
     errorMsg.classList.add('show');
-    btn.disabled = false;
-    btn.textContent = 'Send Message 🚀';
+    btn.disabled = false; btn.textContent = 'Send Message 🚀';
   }
 }
 </script>
