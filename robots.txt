@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: Yandex
+Allow: /
+
+Sitemap: https://mohmdarmaan135-hue.github.io/sitemap.xml
