@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
+<meta name="robots" content="index, follow"/>
 <link href="https://pdfsnap.github.io/" rel="canonical"/>
 <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
 <meta content="website" property="og:type"/>
@@ -377,6 +378,39 @@ body.dark input,body.dark textarea,body.dark select{background:#12100E;color:#F0
 #backTop.show{opacity:1;pointer-events:all}
 #backTop:hover{transform:translateY(-3px)}
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://pdfsnap.github.io/#website",
+      "url": "https://pdfsnap.github.io/",
+      "name": "PDFSnap",
+      "description": "Free online PDF and image tools — merge, split, compress, rotate, watermark, convert. No signup, 100% browser-based.",
+      "inLanguage": "en-US",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://pdfsnap.github.io/blog.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://pdfsnap.github.io/#organization",
+      "name": "PDFSnap",
+      "url": "https://pdfsnap.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://pdfsnap.github.io/android-chrome-512x512.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": []
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <!-- Adsterra Native Banner -->
@@ -743,11 +777,11 @@ body.dark input,body.dark textarea,body.dark select{background:#12100E;color:#F0
 <button onclick="copyShareUrl()">Copy</button>
 </div>
 <div class="share-btns">
-<a class="share-btn" href="#" id="shareWhatsApp" rel="noopener" target="_blank"><span class="sb-icon">💬</span> WhatsApp</a>
-<a class="share-btn" href="#" id="shareTwitter" rel="noopener" target="_blank"><span class="sb-icon">🐦</span> Twitter/X</a>
-<a class="share-btn" href="#" id="shareFacebook" rel="noopener" target="_blank"><span class="sb-icon">👥</span> Facebook</a>
-<a class="share-btn" href="#" id="shareLinkedIn" rel="noopener" target="_blank"><span class="sb-icon">💼</span> LinkedIn</a>
-<a class="share-btn" href="#" id="shareEmail"><span class="sb-icon">📧</span> Email</a>
+<a class="share-btn" href="javascript:void(0)" id="shareWhatsApp" rel="noopener" target="_blank"><span class="sb-icon">💬</span> WhatsApp</a>
+<a class="share-btn" href="javascript:void(0)" id="shareTwitter" rel="noopener" target="_blank"><span class="sb-icon">🐦</span> Twitter/X</a>
+<a class="share-btn" href="javascript:void(0)" id="shareFacebook" rel="noopener" target="_blank"><span class="sb-icon">👥</span> Facebook</a>
+<a class="share-btn" href="javascript:void(0)" id="shareLinkedIn" rel="noopener" target="_blank"><span class="sb-icon">💼</span> LinkedIn</a>
+<a class="share-btn" href="javascript:void(0)" id="shareEmail"><span class="sb-icon">📧</span> Email</a>
 <button class="share-btn" onclick="nativeShare()"><span class="sb-icon">📤</span> More…</button>
 </div>
 </div>
