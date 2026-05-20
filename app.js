@@ -1359,24 +1359,33 @@ function switchTab(t) {
   document.getElementById('panelLogin').classList.toggle('show', t==='login');
   document.getElementById('panelSignup').classList.toggle('show', t==='signup');
 }
-function doLogin() {
+async function hashPass(pass) {
+  var enc = new TextEncoder().encode(pass);
+  var buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function doLogin() {
   var email=document.getElementById('lEmail').value.trim(), pass=document.getElementById('lPass').value.trim();
   if (!email||!pass) { toast('Please fill all fields!','err'); return; }
+  var hashed = await hashPass(pass);
   var users=[]; try { users=JSON.parse(localStorage.getItem('fpdf_users')||'[]'); } catch(e){}
-  var user=users.find(function(u){ return u.email===email&&u.pass===pass; });
+  var user=users.find(function(u){ return u.email===email&&u.pass===hashed; });
   if (!user) { toast('Incorrect email or password!','err'); return; }
-  currentUser=user; localStorage.setItem('fpdf_user',JSON.stringify(user)); closeAuth(); updateNav(); toast('👋 Welcome back, '+user.first+'!','ok');
+  var safeUser={name:user.name,first:user.first,email:user.email};
+  currentUser=safeUser; localStorage.setItem('fpdf_user',JSON.stringify(safeUser)); closeAuth(); updateNav(); toast('👋 Welcome back, '+user.first+'!','ok');
 }
-function doSignup() {
+async function doSignup() {
   var first=document.getElementById('sFirst').value.trim(), last=document.getElementById('sLast').value.trim();
   var email=document.getElementById('sEmail').value.trim(), pass=document.getElementById('sPass').value.trim();
   if (!first||!last||!email||!pass) { toast('Please fill all fields!','err'); return; }
   if (pass.length<6) { toast('Password must be at least 6 characters!','err'); return; }
+  var hashed = await hashPass(pass);
   var users=[]; try { users=JSON.parse(localStorage.getItem('fpdf_users')||'[]'); } catch(e){}
   if (users.find(function(u){ return u.email===email; })) { toast('This email is already registered!','err'); return; }
-  var newUser={name:first+' '+last, first:first, email:email, pass:pass};
+  var newUser={name:first+' '+last, first:first, email:email, pass:hashed};
   users.push(newUser); localStorage.setItem('fpdf_users',JSON.stringify(users));
-  currentUser=newUser; localStorage.setItem('fpdf_user',JSON.stringify(newUser)); closeAuth(); updateNav(); toast('🎉 Welcome to PDFSnap, '+first+'!','ok');
+  var safeUser={name:first+' '+last,first:first,email:email};
+  currentUser=safeUser; localStorage.setItem('fpdf_user',JSON.stringify(safeUser)); closeAuth(); updateNav(); toast('🎉 Welcome to PDFSnap, '+first+'!','ok');
 }
 function doLogout() {
   currentUser=null; localStorage.removeItem('fpdf_user'); updateNav(); toast('Logged out. See you next time!','info');
