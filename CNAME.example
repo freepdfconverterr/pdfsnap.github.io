@@ -1,0 +1,15 @@
+# Replace the domain below with your actual custom domain after purchasing it.
+# Example: pdfsnap.io or getpdfsnap.com
+# Then set up a CNAME DNS record pointing to pdfsnap.github.io
+# See: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site
+#
+# INSTRUCTIONS:
+# 1. Buy a domain from Namecheap, Google Domains, or Cloudflare Registrar (~$10/yr)
+# 2. Delete the comment lines from this file and add just your domain:
+#    pdfsnap.io
+# 3. In your DNS settings, add:
+#    Type: CNAME, Name: www, Value: pdfsnap.github.io
+#    Type: A, Name: @, Values: 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153
+# 4. In your repo Settings > Pages, set the custom domain
+#
+# YOUR_DOMAIN_HERE
