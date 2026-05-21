@@ -14,7 +14,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NT288WP4YR"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-NT288WP4YR');</script>
 <script>window.addEventListener('load',function(){var s=document.createElement('script');s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7352879981287034';s.crossOrigin='anonymous';document.head.appendChild(s);});</script>
-<title>Contact Us — PDFSnap</title>
+<title>Contact PDFSnap — Support & Feedback</title>
 <meta name="description" content="Contact the PDFSnap team. Report a bug, request a feature, or ask a question. We respond within 48 hours."/>
 <link rel="canonical" href="https://pdfsnap.github.io/contact.html"/>
 <style>
@@ -88,7 +88,7 @@ body.dark nav{background:rgba(18,16,14,.97)}
 </head>
 <body>
 <!-- Adsterra Native Banner -->
-<script async="async" data-cfasync="false" src="https://pl29357406.profitablecpmratenetwork.com/07b60688d237b4ad6b32287403f18786/invoke.js"></script>
+
 <div id="container-07b60688d237b4ad6b32287403f18786"></div>
 <nav>
   <a class="logo" href="index.html">PDF<span>Snap</span></a>
@@ -176,28 +176,7 @@ body.dark nav{background:rgba(18,16,14,.97)}
     <div style="color:var(--mut);font-size:.76rem;margin-top:.55rem;opacity:.85;line-height:1.8">📧 <a href="mailto:pdfsnap.tools@gmail.com" style="color:var(--mut);text-decoration:none">pdfsnap.tools@gmail.com</a> &nbsp;|&nbsp; 📍 Himachal Pradesh, India</div>
   </div>
 </footer>
-<script>
-async function submitContact() {
-  var name=document.getElementById('cName').value.trim();
-  var email=document.getElementById('cEmail').value.trim();
-  var subject=document.getElementById('cSubject').value;
-  var msg=document.getElementById('cMsg').value.trim();
-  if (!name||!email||!subject||!msg) { alert('Please fill in all fields!'); return; }
-  if (!email.includes('@')||!email.includes('.')) { alert('Please enter a valid email!'); return; }
-  var btn=document.getElementById('submitBtn');
-  btn.disabled=true; btn.textContent='Sending…';
-  document.getElementById('successMsg').classList.remove('show');
-  document.getElementById('errorMsg').classList.remove('show');
-  try {
-    var res=await fetch('https://formspree.io/f/mlgpvjqg',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:name,email:email,subject:subject,message:msg,date:new Date().toLocaleDateString()})});
-    if (res.ok) { btn.style.display='none'; document.getElementById('successMsg').classList.add('show'); }
-    else { throw new Error('Server error'); }
-  } catch(e) {
-    document.getElementById('errorMsg').classList.add('show');
-    btn.disabled=false; btn.textContent='Send Message 🚀';
-  }
-}
-</script>
+
 <script>
 (function(){
   var saved=localStorage.getItem('pdfsnap-theme');
@@ -215,6 +194,63 @@ window.addEventListener('scroll',function(){
 </script>
 <button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <!-- Adsterra Social Bar -->
-<script src="https://pl29357407.profitablecpmratenetwork.com/34/ff/cd/34ffcdb5c7bb232bdb1a400f0a7b4703.js"></script>
+
+<script>
+// FORMSPREE CONTACT FORM — replace YOUR_FORM_ID with your Formspree endpoint ID
+// Get one free at https://formspree.io (takes 2 min)
+(function(){
+  var FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+  var form = document.getElementById("contactForm") || document.querySelector("form");
+  var nameEl  = document.getElementById("cName")    || document.querySelector("[id*='name' i]");
+  var emailEl = document.getElementById("cEmail")   || document.querySelector("[type='email']");
+  var msgEl   = document.getElementById("cMsg")     || document.querySelector("textarea");
+  var subjectEl = document.getElementById("cSubject");
+  var submitBtn = document.getElementById("submitBtn") || document.querySelector("button[type='submit'], .btn-submit");
+  var successEl = document.getElementById("successMsg");
+  var errorEl   = document.getElementById("errorMsg");
+
+  function showEl(el){ if(el) el.style.display='block'; }
+  function hideEl(el){ if(el) el.style.display='none'; }
+
+  if(submitBtn){
+    submitBtn.addEventListener("click", async function(e){
+      e.preventDefault();
+      var email = emailEl ? emailEl.value.trim() : "";
+      var msg   = msgEl   ? msgEl.value.trim()   : "";
+      if(!email || !msg){
+        hideEl(successEl); showEl(errorEl);
+        if(errorEl) errorEl.textContent = "Please fill in email and message.";
+        return;
+      }
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending…";
+      try {
+        var payload = { email: email, message: msg };
+        if(nameEl && nameEl.value) payload.name = nameEl.value.trim();
+        if(subjectEl && subjectEl.value) payload.subject = subjectEl.value;
+        var res = await fetch(FORMSPREE_ENDPOINT, {
+          method:"POST",
+          headers:{"Content-Type":"application/json","Accept":"application/json"},
+          body: JSON.stringify(payload)
+        });
+        var data = await res.json();
+        if(res.ok){
+          hideEl(errorEl); showEl(successEl);
+          if(successEl) successEl.textContent = "✅ Message sent! We'll reply within 48 hours.";
+          if(form) form.reset();
+        } else {
+          throw new Error(data.error || "Submission failed");
+        }
+      } catch(err){
+        hideEl(successEl); showEl(errorEl);
+        if(errorEl) errorEl.textContent = "❌ Something went wrong. Email us at pdfsnap.tools@gmail.com";
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send Message";
+      }
+    });
+  }
+})();
+</script>
 </body>
 </html>
