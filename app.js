@@ -392,6 +392,25 @@ function addFiles(files) {
   renderFileList();
   var btn = document.getElementById('runBtn');
   if (btn) btn.disabled = toolFiles.length === 0;
+  // Auto-populate output name fields based on uploaded filenames
+  if (toolFiles.length > 0) {
+    var firstName = toolFiles[0].name.replace(/\.[^.]+$/, '');
+    var mergeEl = document.getElementById('optMergeName');
+    if (mergeEl) {
+      if (toolFiles.length === 1) {
+        mergeEl.value = firstName + '_merged';
+      } else {
+        var lastName = toolFiles[toolFiles.length - 1].name.replace(/\.[^.]+$/, '');
+        mergeEl.value = firstName + '_' + lastName + '_merged';
+      }
+    }
+    var compressEl = document.getElementById('optCompressName');
+    if (compressEl) { compressEl.value = firstName + '_compressed'; }
+    var j2pEl = document.getElementById('optJ2PName');
+    if (j2pEl) { j2pEl.value = firstName + (toolFiles.length > 1 ? '_and_more' : '') + '_to_pdf'; }
+    var extractEl = document.getElementById('optExtractName');
+    if (extractEl) { extractEl.value = firstName + '_extracted'; }
+  }
   // Trigger special tool UIs after file is picked
   if (currentTool.id === 'organizer') { setTimeout(buildOrganizerUI, 100); }
   if (currentTool.id === 'pdfsign')   { setTimeout(buildSignCanvas,   100); }
@@ -400,6 +419,25 @@ function removeFile(i) {
   toolFiles.splice(i, 1); renderFileList();
   var btn = document.getElementById('runBtn');
   if (btn) btn.disabled = toolFiles.length === 0;
+  // Refresh auto-populated output name fields
+  if (toolFiles.length > 0) {
+    var firstName = toolFiles[0].name.replace(/\.[^.]+$/, '');
+    var mergeEl = document.getElementById('optMergeName');
+    if (mergeEl) {
+      if (toolFiles.length === 1) {
+        mergeEl.value = firstName + '_merged';
+      } else {
+        var lastName = toolFiles[toolFiles.length - 1].name.replace(/\.[^.]+$/, '');
+        mergeEl.value = firstName + '_' + lastName + '_merged';
+      }
+    }
+    var compressEl = document.getElementById('optCompressName');
+    if (compressEl) { compressEl.value = firstName + '_compressed'; }
+    var j2pEl = document.getElementById('optJ2PName');
+    if (j2pEl) { j2pEl.value = firstName + (toolFiles.length > 1 ? '_and_more' : '') + '_to_pdf'; }
+    var extractEl = document.getElementById('optExtractName');
+    if (extractEl) { extractEl.value = firstName + '_extracted'; }
+  }
 }
 function renderFileList() {
   var fl = document.getElementById('fileList');
@@ -565,7 +603,7 @@ async function tSplit() {
     var pages = await newDoc.copyPages(src, idxs);
     pages.forEach(function(p){ newDoc.addPage(p); });
     var bytes = await newDoc.save();
-    results.push({name:'pages_'+(from+1)+'-'+(to+1)+'.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))});
+    results.push({name:toolFiles[0].name.replace(/\.pdf$/i,'')+'_pages_'+(from+1)+'-'+(to+1)+'.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))});
   } else if (mode === 'every') {
     var n = Math.max(1, parseInt(document.getElementById('optEvery').value)||1);
     var part = 0;
@@ -577,7 +615,7 @@ async function tSplit() {
       var idxs2 = []; for (var j=start;j<=end;j++) idxs2.push(j);
       var pg = await d.copyPages(src, idxs2); pg.forEach(function(p){ d.addPage(p); });
       var b = await d.save();
-      results.push({name:'part'+part+'_p'+(start+1)+'-'+(end+1)+'.pdf', size:fmtSize(b.length), url:URL.createObjectURL(new Blob([b],{type:'application/pdf'}))});
+      results.push({name:toolFiles[0].name.replace(/\.pdf$/i,'')+'_part'+part+'_p'+(start+1)+'-'+(end+1)+'.pdf', size:fmtSize(b.length), url:URL.createObjectURL(new Blob([b],{type:'application/pdf'}))});
     }
   } else if (mode === 'all') {
     for (var i = 0; i < total; i++) {
@@ -585,7 +623,7 @@ async function tSplit() {
       var d = await PDFDoc.create();
       var pg = await d.copyPages(src,[i]); d.addPage(pg[0]);
       var b = await d.save();
-      results.push({name:'page_'+(i+1)+'.pdf', size:fmtSize(b.length), url:URL.createObjectURL(new Blob([b],{type:'application/pdf'}))});
+      results.push({name:toolFiles[0].name.replace(/\.pdf$/i,'')+'_page_'+(i+1)+'.pdf', size:fmtSize(b.length), url:URL.createObjectURL(new Blob([b],{type:'application/pdf'}))});
     }
   } else if (mode === 'remove') {
     var removeStr = (document.getElementById('optRemovePages').value||'').trim();
@@ -595,7 +633,7 @@ async function tSplit() {
     var keepIdxs = []; for (var i=0;i<total;i++) if (!removeSet.has(i)) keepIdxs.push(i);
     var pg = await d.copyPages(src, keepIdxs); pg.forEach(function(p){ d.addPage(p); });
     var b = await d.save();
-    results.push({name:'removed_pages.pdf', size:fmtSize(b.length), url:URL.createObjectURL(new Blob([b],{type:'application/pdf'}))});
+    results.push({name:toolFiles[0].name.replace(/\.pdf$/i,'')+'_removed_pages.pdf', size:fmtSize(b.length), url:URL.createObjectURL(new Blob([b],{type:'application/pdf'}))});
   }
   setP(100,'Done!'); showResults(results);
 }
@@ -616,7 +654,7 @@ async function tRotatePDF() {
     if (shouldRotate) { var cur = p.getRotation().angle; p.setRotation(PDFLib.degrees((cur+angle)%360)); }
   });
   setP(90, 'Saving…'); var bytes = await doc.save();
-  showResults([{name:'rotated.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
+  showResults([{name:toolFiles[0].name.replace(/\.pdf$/i,'')+'_rotated.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
 }
 
 async function tCompressPDF() {
@@ -651,7 +689,7 @@ async function tCompressPDF() {
     } else {
       bytes = await doc.save({useObjectStreams: true});
     }
-    var fname = toolFiles.length > 1 ? toolFiles[fi].name.replace(/\.pdf$/i,'')+'_compressed.pdf' : (baseName.endsWith('.pdf')?baseName:baseName+'.pdf');
+    var fname = toolFiles[fi].name.replace(/\.pdf$/i,'')+'_compressed.pdf';
     var saved = toolFiles[fi].size>bytes.length ? Math.round((1-bytes.length/toolFiles[fi].size)*100) : 0;
     results.push({name:fname, size:fmtSize(bytes.length)+' (saved '+saved+'%)', url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))});
   }
@@ -685,7 +723,7 @@ async function tPDF2JPG() {
     canvas.width = vp.width; canvas.height = vp.height;
     await page.render({canvasContext:canvas.getContext('2d'), viewport:vp}).promise;
     var blob = await new Promise(function(res){ canvas.toBlob(res, mime, qual); });
-    results.push({name:'page-'+i+'.'+ext, size:fmtSize(blob.size), url:URL.createObjectURL(blob)});
+    results.push({name:toolFiles[0].name.replace(/\.pdf$/i,'')+'_page-'+i+'.'+ext, size:fmtSize(blob.size), url:URL.createObjectURL(blob)});
   }
   setP(100, 'Done!');
   showResults(results);
@@ -733,7 +771,7 @@ async function tJPG2PDF() {
     page.drawImage(img,{x:dx,y:ph-dy-dh,width:dw,height:dh});
   }
   setP(95, 'Saving…'); var bytes = await doc.save();
-  var fname = ((document.getElementById('optJ2PName')?document.getElementById('optJ2PName').value.trim():'')||'images')+'.pdf';
+  var fname = ((document.getElementById('optJ2PName')?document.getElementById('optJ2PName').value.trim():'')||(toolFiles[0].name.replace(/\.[^.]+$/,'')+(toolFiles.length>1?'_and_more':'')+'_to_pdf'))+'.pdf';
   showResults([{name:fname, size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
 }
 
@@ -763,7 +801,7 @@ async function tWatermarkPDF() {
     page.drawText(text, {x: cx, y: cy, size: size, color: rgb, opacity: opacity, rotate: PDFLib.degrees(angle)});
   });
   setP(90,'Saving…'); var bytes = await doc.save();
-  showResults([{name:'watermarked.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
+  showResults([{name:toolFiles[0].name.replace(/\.pdf$/i,'')+'_watermarked.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
 }
 
 async function tPageNumbers() {
@@ -787,7 +825,7 @@ async function tPageNumbers() {
     page.drawText(label, {x:px, y:py, size:fsz, color:PDFLib.rgb(0,0,0), opacity:0.7});
   });
   setP(90,'Saving…'); var bytes = await doc.save();
-  showResults([{name:'numbered.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
+  showResults([{name:toolFiles[0].name.replace(/\.pdf$/i,'')+'_numbered.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
 }
 
 async function tGrayscalePDF() {
@@ -823,7 +861,7 @@ async function tReorderPDF() {
   var indices = []; for (var i=total-1;i>=0;i--) indices.push(i);
   var pages = await newDoc.copyPages(doc, indices); pages.forEach(function(p){ newDoc.addPage(p); });
   setP(90,'Saving…'); var bytes = await newDoc.save();
-  showResults([{name:'reversed.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
+  showResults([{name:toolFiles[0].name.replace(/\.pdf$/i,'')+'_reversed.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
 }
 
 async function tExtractPages() {
@@ -848,7 +886,7 @@ async function tExtractPages() {
   var newDoc = await PDFDoc.create();
   var pages = await newDoc.copyPages(src, idxSet); pages.forEach(function(p){ newDoc.addPage(p); });
   setP(90,'Saving…'); var bytes = await newDoc.save();
-  var fname = ((document.getElementById('optExtractName')?document.getElementById('optExtractName').value.trim():'')||'extracted')+'.pdf';
+  var fname = ((document.getElementById('optExtractName')?document.getElementById('optExtractName').value.trim():'')||toolFiles[0].name.replace(/\.pdf$/i,'')+'_extracted')+'.pdf';
   showResults([{name:fname, size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
 }
 
@@ -867,7 +905,7 @@ async function tDeletePages() {
   var newDoc = await PDFDoc.create();
   var pages = await newDoc.copyPages(src, keepIdxs); pages.forEach(function(p){ newDoc.addPage(p); });
   setP(90,'Saving…'); var bytes = await newDoc.save();
-  showResults([{name:'cleaned.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
+  showResults([{name:toolFiles[0].name.replace(/\.pdf$/i,'')+'_deleted.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
 }
 
 async function tUnlockPDF() {
@@ -877,7 +915,7 @@ async function tUnlockPDF() {
   var doc = await PDFDoc.load(buf, {ignoreEncryption:true});
   setP(80,'Saving unlocked PDF…');
   var bytes = await doc.save();
-  showResults([{name:'unlocked.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
+  showResults([{name:toolFiles[0].name.replace(/\.pdf$/i,'')+'_unlocked.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
 }
 
 // ════════════════════════════════════
@@ -943,7 +981,7 @@ async function tCrop() {
   var c = document.createElement('canvas'); c.width=cw; c.height=ch;
   c.getContext('2d').drawImage(img,x,y,cw,ch,0,0,cw,ch);
   var blob = await toBlob(c,'image/jpeg',0.92);
-  showResults([{name:'cropped.jpg', size:fmtSize(blob.size), url:URL.createObjectURL(blob)}]);
+  showResults([{name:toolFiles[0].name.replace(/\.[^.]+$/,'')+'_cropped.jpg', size:fmtSize(blob.size), url:URL.createObjectURL(blob)}]);
 }
 
 async function tConvert(ext, mime) {
@@ -1170,7 +1208,7 @@ async function tImgToPDF() {
     page.drawImage(img,{x:0,y:0,width:img.width,height:img.height});
   }
   setP(95,'Saving…'); var bytes = await doc.save();
-  showResults([{name:'images.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
+  showResults([{name:toolFiles[0].name.replace(/\.[^.]+$/,'')+(toolFiles.length>1?'_and_more':'')+'_to_pdf.pdf', size:fmtSize(bytes.length), url:URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}]);
 }
 
 // ═══ NEW IMAGE TOOLS ═══
@@ -2036,7 +2074,7 @@ async function tOCR() {
       '<div class="res-item" style="flex-direction:column;align-items:flex-start">'+
       '<div style="display:flex;width:100%;justify-content:space-between;align-items:center;margin-bottom:.5rem">'+
       '<strong style="font-size:.9rem">Extracted Text ('+fullText.length.toLocaleString()+' chars)</strong>'+
-      '<a class="btn-dl" href="'+url+'" download="ocr-output.txt">⬇ Download .txt</a>'+
+      '<a class="btn-dl" href="'+url+'" download="'+toolFiles[0].name.replace(/\.[^.]+$/,'')+'_ocr.txt">⬇ Download .txt</a>'+
       '</div>'+
       '<textarea id="ocrText" style="width:100%;height:200px;font-size:.8rem;font-family:monospace;border:1px solid var(--bdr);border-radius:8px;padding:.6rem;background:var(--sur);color:var(--txt);resize:vertical" readonly></textarea>'+
       '<button onclick="navigator.clipboard.writeText(document.getElementById(\'ocrText\').value).then(function(){toast(\'Copied!\',\'ok\')})" style="margin-top:.5rem;background:none;border:1px solid var(--bdr);border-radius:8px;padding:.35rem .8rem;cursor:pointer;font-size:.82rem">📋 Copy to Clipboard</button>'+
